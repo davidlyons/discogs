@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 import { fetchVinyls } from '@/lib/fetch'
+import { Spinner } from '@/components/ui/spinner'
 import { AlbumGrid } from '@/components/AlbumGrid'
 import { PaginationRow } from '@/components/PaginationRow'
 import type { ReleaseJSONType, Pagination } from '@/lib/types'
@@ -29,13 +30,19 @@ export function VinylBrowser({ user }: { user: string }) {
     })
   }, [user, page, perPage])
 
-  // Clear cache and reset page when perPage changes
+  // Clear cache and reset page when user or perPage changes
   useEffect(() => {
     cache.current = {}
     setPage(1)
-  }, [perPage])
+    setData(null)
+  }, [user, perPage])
 
-  if (!data) return <div>Loading...</div>
+  if (!data)
+    return (
+      <div className="flex items-center gap-4">
+        <Spinner /> Loading...
+      </div>
+    )
 
   return (
     <>
