@@ -31,7 +31,7 @@ export type Release = {
 // tranformToJSON() return type
 export type ReleaseJSONType = {
   title: string
-  artist: string
+  artists: Artist[]
   label: string
   year: number
   thumb: string

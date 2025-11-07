@@ -41,7 +41,7 @@ export const fetchVinyls = async ({ user, page = 1, perPage = 25 }: fetchVinylsP
 export const transformToJSON = (releases: Release[]): ReleaseJSONType[] => {
   return releases.map((release) => ({
     title: release.basic_information.title,
-    artist: release.basic_information.artists.map((artist) => artist.name).join(', '),
+    artists: release.basic_information.artists,
     label: release.basic_information.labels.map((label) => label.name).join(', '),
     year: release.basic_information.year,
     thumb: release.basic_information.thumb,
