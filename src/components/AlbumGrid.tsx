@@ -29,6 +29,7 @@ export const AlbumGrid = ({ releases }: { releases: ReleaseJSONType[] }) => (
               <a
                 className="underline-offset-4 hover:underline"
                 href={`https://www.discogs.com/artist/${artist.id}`}
+                key={artist.id}
               >
                 {artist.name}
               </a>

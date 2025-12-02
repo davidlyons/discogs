@@ -1,59 +1,42 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState } from 'react'
+import { useQuery } from '@tanstack/react-query'
 import { fetchVinyls } from '@/lib/fetch'
 import { Spinner } from '@/components/ui/spinner'
 import { AlbumGrid } from '@/components/AlbumGrid'
 import { PaginationRow } from '@/components/PaginationRow'
-import type { ReleaseJSONType, Pagination } from '@/lib/types'
-
-type DataType = { releases: ReleaseJSONType[]; pagination: Pagination }
 
 export function VinylBrowser({ user }: { user: string }) {
   const [page, setPage] = useState(1)
   const [perPage, setPerPage] = useState(25)
-  const [data, setData] = useState<DataType | null>(null)
 
-  // Cache for page data (keyed by page and perPage)
-  const cache = useRef<Record<string, DataType>>({})
+  const { isLoading, data } = useQuery({
+    queryKey: ['vinyl', page, perPage],
+    queryFn: () => fetchVinyls({ user, page, perPage }),
+    staleTime: 24 * 60 * 60 * 1000, // 1 day
+  })
 
-  useEffect(() => {
-    const cacheKey = `${page}-${perPage}`
-    if (cache.current[cacheKey]) {
-      setData(cache.current[cacheKey])
-      return
-    }
-
-    fetchVinyls({ user, page, perPage }).then((result) => {
-      cache.current[cacheKey] = result
-      setData(result)
-    })
-  }, [user, page, perPage])
-
-  // Clear cache and reset page when user or perPage changes
-  useEffect(() => {
-    cache.current = {}
-    setPage(1)
-    setData(null)
-  }, [user, perPage])
-
-  if (!data)
+  if (isLoading) {
     return (
       <div className="flex items-center gap-4">
         <Spinner /> Loading...
       </div>
     )
+  }
 
-  return (
-    <>
-      <PaginationRow
-        pagination={data.pagination}
-        setPage={setPage}
-        perPage={perPage}
-        setPerPage={setPerPage}
-      />
+  if (data) {
+    return (
+      <>
+        <PaginationRow
+          pagination={data.pagination}
+          setPage={setPage}
+          perPage={perPage}
+          setPerPage={setPerPage}
+        />
 
-      <AlbumGrid releases={data.releases} />
-    </>
-  )
+        <AlbumGrid releases={data.releases} />
+      </>
+    )
+  }
 }

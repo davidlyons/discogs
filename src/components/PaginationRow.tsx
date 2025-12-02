@@ -5,7 +5,7 @@ import type { Pagination as PaginationType } from '@/lib/types'
 import {
   Pagination,
   PaginationContent,
-  PaginationEllipsis,
+  // PaginationEllipsis,
   PaginationItem,
   PaginationLink,
   PaginationNext,
@@ -23,21 +23,18 @@ import {
 // import { Button } from '@/components/ui/button'
 // import { LayoutGrid, LayoutList, AlignJustify } from 'lucide-react'
 
-export const PaginationRow = ({
-  pagination,
-  setPage,
-  perPage,
-  setPerPage,
-}: {
+type PaginationRowProps = {
   pagination: PaginationType
   perPage: number
   setPage: React.Dispatch<React.SetStateAction<number>>
   setPerPage: React.Dispatch<React.SetStateAction<number>>
-}) => {
-  console.log(pagination)
+}
+
+export const PaginationRow = ({ pagination, setPage, perPage, setPerPage }: PaginationRowProps) => {
+  // console.log(pagination)
 
   return (
-    <div className="flex justify-between items-center mb-4">
+    <div className="mb-4 flex items-center justify-between text-sm">
       <div>
         <Pagination>
           <PaginationContent>
@@ -80,20 +77,28 @@ export const PaginationRow = ({
       </div>
 
       <div>
-        {/* Albums: {pagination.items} */}
-        {pagination.per_page * (pagination.page - 1) + 1}&ndash;
-        {Math.min(
-          pagination.per_page * (pagination.page - 1) + pagination.per_page,
-          pagination.items
-        )}{' '}
-        of {pagination.items}
+        Showing{' '}
+        <span className="mx-1 font-bold">
+          {pagination.per_page * (pagination.page - 1) + 1} –{' '}
+          {Math.min(
+            pagination.per_page * (pagination.page - 1) + pagination.per_page,
+            pagination.items
+          )}
+        </span>{' '}
+        of <span className="mx-1 font-bold">{pagination.items}</span> albums
       </div>
 
       {/* per page select */}
       <div className="flex items-center">
         Show
-        <Select value={perPage.toString()} onValueChange={(value) => setPerPage(parseInt(value))}>
-          <SelectTrigger className="ms-3">
+        <Select
+          value={perPage.toString()}
+          onValueChange={(value) => {
+            setPerPage(parseInt(value))
+            setPage(1) // reset page to 1 when perPage changes
+          }}
+        >
+          <SelectTrigger className="mx-3">
             <SelectValue placeholder="per page" />
           </SelectTrigger>
           <SelectContent>
@@ -104,6 +109,7 @@ export const PaginationRow = ({
             ))}
           </SelectContent>
         </Select>
+        albums
         {/* Layout control */}
         {/* <div className="space-x-2">
           <Button size="icon" variant="outline">

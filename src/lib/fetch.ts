@@ -5,11 +5,14 @@ import type { Data, Release, ReleaseJSONType } from '@/lib/types'
 // https://pixelswap.fr/entry/displaying-my-vinyl-collection-from-the-discogs-api/
 // https://dev.to/mannuelf/fun-with-remix-react-and-the-discogs-api-1e0i
 
-type fetchVinylsProps = { user: string; page?: number; perPage?: number }
+type fetchVinylsProps = {
+  user: string
+  page?: number
+  perPage?: number
+}
 
+// get user's vinyl collection
 export const fetchVinyls = async ({ user, page = 1, perPage = 25 }: fetchVinylsProps) => {
-  // try {
-
   const response = await fetch(
     // 0 is the folder ID for the main collection
     // per_page default is 50, can be up to 100
@@ -31,14 +34,9 @@ export const fetchVinyls = async ({ user, page = 1, perPage = 25 }: fetchVinylsP
     pagination: data.pagination,
     releases: transformToJSON(data.releases),
   }
-
-  // } catch (error) {
-  //   console.error('Error fetching data from Discogs:', error)
-  //   return []
-  // }
 }
 
-export const transformToJSON = (releases: Release[]): ReleaseJSONType[] => {
+const transformToJSON = (releases: Release[]): ReleaseJSONType[] => {
   return releases.map((release) => ({
     title: release.basic_information.title,
     artists: release.basic_information.artists,
