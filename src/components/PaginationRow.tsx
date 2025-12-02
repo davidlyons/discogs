@@ -34,7 +34,7 @@ export const PaginationRow = ({ pagination, setPage, perPage, setPerPage }: Pagi
   // console.log(pagination)
 
   return (
-    <div className="mb-4 flex items-center justify-between text-sm">
+    <div className="mb-4 flex flex-wrap items-center justify-between gap-4 text-sm">
       <div>
         <Pagination>
           <PaginationContent>

@@ -15,6 +15,7 @@ function App() {
           <span className="font-bold">Discogs user</span>
           <Input
             className="w-auto"
+            name="user"
             placeholder="Discogs username"
             value={user}
             onChange={(e) => {
