@@ -7,12 +7,17 @@ import { Spinner } from '@/components/ui/spinner'
 import { AlbumGrid } from '@/components/AlbumGrid'
 import { PaginationRow } from '@/components/PaginationRow'
 
-export function VinylBrowser({ user }: { user: string }) {
-  const [page, setPage] = useState(1)
+type VinylBrowserProps = {
+  user: string
+  page: number
+  setPage: React.Dispatch<React.SetStateAction<number>>
+}
+
+export function VinylBrowser({ user, page, setPage }: VinylBrowserProps) {
   const [perPage, setPerPage] = useState(25)
 
   const { isLoading, data } = useQuery({
-    queryKey: ['vinyl', page, perPage],
+    queryKey: ['vinyl', user, page, perPage],
     queryFn: () => fetchVinyls({ user, page, perPage }),
     staleTime: 24 * 60 * 60 * 1000, // 1 day
   })
