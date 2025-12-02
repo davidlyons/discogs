@@ -11,8 +11,8 @@ function App() {
   return (
     <div className="overflow-hidden py-14">
       <div className="container">
-        <div className="mb-5 flex items-center gap-2">
-          User
+        <div className="mb-5 flex items-center gap-2 text-sm">
+          <span className="font-bold">Discogs user</span>
           <Input
             className="w-auto"
             placeholder="Discogs username"
