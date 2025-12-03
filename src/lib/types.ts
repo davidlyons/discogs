@@ -28,8 +28,8 @@ export type Release = {
   notes: Note[]
 }
 
-// tranformToJSON() return type
-export type ReleaseJSONType = {
+// tranformReleases() return type
+export type ReleaseFormatted = {
   title: string
   artists: Artist[]
   label: string

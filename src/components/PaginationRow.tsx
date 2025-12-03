@@ -31,8 +31,6 @@ type PaginationRowProps = {
 }
 
 export const PaginationRow = ({ pagination, setPage, perPage, setPerPage }: PaginationRowProps) => {
-  // console.log(pagination)
-
   return (
     <div className="mb-4 flex flex-wrap items-center justify-between gap-4 text-sm">
       <div>

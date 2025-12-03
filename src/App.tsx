@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button'
 import { ExternalLink } from 'lucide-react'
 import { VinylBrowser } from '@/components/VinylBrowser'
 
-function App() {
+export const App = () => {
   const [user, setUser] = useState('davidlyons')
   const [page, setPage] = useState(1)
 
@@ -35,5 +35,3 @@ function App() {
     </div>
   )
 }
-
-export default App

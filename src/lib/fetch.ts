@@ -1,4 +1,4 @@
-import type { Data, Release, ReleaseJSONType } from '@/lib/types'
+import type { Data, Release, ReleaseFormatted } from '@/lib/types'
 
 // https://www.discogs.com/developers
 // https://www.discogs.com/developers#page:user-collection,header:user-collection-collection-items-by-folder
@@ -32,11 +32,11 @@ export const fetchVinyls = async ({ user, page = 1, perPage = 25 }: fetchVinylsP
 
   return {
     pagination: data.pagination,
-    releases: transformToJSON(data.releases),
+    releases: transformReleases(data.releases),
   }
 }
 
-const transformToJSON = (releases: Release[]): ReleaseJSONType[] => {
+const transformReleases = (releases: Release[]): ReleaseFormatted[] => {
   return releases.map((release) => ({
     title: release.basic_information.title,
     artists: release.basic_information.artists,

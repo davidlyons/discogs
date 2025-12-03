@@ -29,7 +29,7 @@ function SelectTrigger({
       data-slot="select-trigger"
       data-size={size}
       className={cn(
-        `border-input data-[placeholder]:text-muted-foreground
+        `border-input data-placeholder:text-muted-foreground
         [&_svg:not([class*='text-'])]:text-muted-foreground focus-visible:border-ring
         focus-visible:ring-ring/50 aria-invalid:ring-destructive/20
         dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:bg-input/30
@@ -69,7 +69,7 @@ function SelectContent({
           data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95
           data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2
           data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 relative
-          z-50 max-h-(--radix-select-content-available-height) min-w-[8rem]
+          z-50 max-h-(--radix-select-content-available-height) min-w-32
           origin-(--radix-select-content-transform-origin) overflow-x-hidden overflow-y-auto
           rounded-md border shadow-md`,
           position === 'popper' &&
@@ -86,8 +86,8 @@ function SelectContent({
           className={cn(
             'p-1',
             position === 'popper' &&
-              `h-[var(--radix-select-trigger-height)] w-full
-              min-w-[var(--radix-select-trigger-width)] scroll-my-1`
+              `h-(--radix-select-trigger-height) w-full min-w-(--radix-select-trigger-width)
+              scroll-my-1`
           )}
         >
           {children}
