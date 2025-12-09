@@ -17,7 +17,7 @@ export const AlbumGrid = ({ releases }: { releases: ReleaseFormatted[] }) => (
             href={listenUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="group relative size-24"
+            className="group relative size-24 shrink-0"
           >
             {thumb ? (
               <img src={thumb} alt={title} className="size-full object-cover" />
