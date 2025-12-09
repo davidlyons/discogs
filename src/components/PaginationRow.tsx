@@ -20,17 +20,27 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 
-// import { Button } from '@/components/ui/button'
-// import { LayoutGrid, LayoutList, AlignJustify } from 'lucide-react'
+import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
+import { LayoutGrid, LayoutList, AlignJustify } from 'lucide-react'
+import type { View } from '@/components/VinylBrowser'
 
 type PaginationRowProps = {
   pagination: PaginationType
   perPage: number
   setPage: React.Dispatch<React.SetStateAction<number>>
   setPerPage: React.Dispatch<React.SetStateAction<number>>
+  view: View
+  setView: React.Dispatch<React.SetStateAction<View>>
 }
 
-export const PaginationRow = ({ pagination, setPage, perPage, setPerPage }: PaginationRowProps) => {
+export const PaginationRow = ({
+  pagination,
+  setPage,
+  perPage,
+  setPerPage,
+  view,
+  setView,
+}: PaginationRowProps) => {
   return (
     <div className="mb-4 flex flex-wrap items-center justify-between gap-4 text-sm">
       <div>
@@ -87,39 +97,50 @@ export const PaginationRow = ({ pagination, setPage, perPage, setPerPage }: Pagi
       </div>
 
       {/* per page select */}
-      <div className="flex items-center">
-        Show
-        <Select
-          value={perPage.toString()}
-          onValueChange={(value) => {
-            setPerPage(parseInt(value))
-            setPage(1) // reset page to 1 when perPage changes
+      <div className="flex flex-wrap gap-7">
+        <div className="flex items-center">
+          Show
+          <Select
+            value={perPage.toString()}
+            onValueChange={(value) => {
+              setPerPage(parseInt(value))
+              setPage(1) // reset page to 1 when perPage changes
+            }}
+          >
+            <SelectTrigger className="mx-3">
+              <SelectValue placeholder="per page" />
+            </SelectTrigger>
+            <SelectContent>
+              {[10, 25, 50, 100].map((value, i) => (
+                <SelectItem value={value.toString()} key={value}>
+                  {value}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          albums
+        </div>
+
+        {/* Layout control */}
+        <ToggleGroup
+          type="single"
+          spacing={2}
+          variant="outline"
+          value={view}
+          onValueChange={(value: View) => {
+            if (value) setView(value)
           }}
         >
-          <SelectTrigger className="mx-3">
-            <SelectValue placeholder="per page" />
-          </SelectTrigger>
-          <SelectContent>
-            {[10, 25, 50, 100].map((value, i) => (
-              <SelectItem value={value.toString()} key={value}>
-                {value}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-        albums
-        {/* Layout control */}
-        {/* <div className="space-x-2">
-          <Button size="icon" variant="outline">
-            <LayoutGrid />
-          </Button>
-          <Button size="icon" variant="outline">
+          <ToggleGroupItem value="covers-text" title="Covers and text">
             <LayoutList />
-          </Button>
-          <Button size="icon" variant="outline">
+          </ToggleGroupItem>
+          <ToggleGroupItem value="covers" title="Covers only">
+            <LayoutGrid />
+          </ToggleGroupItem>
+          <ToggleGroupItem value="text" title="Text only">
             <AlignJustify />
-          </Button>
-        </div> */}
+          </ToggleGroupItem>
+        </ToggleGroup>
       </div>
     </div>
   )
