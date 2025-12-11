@@ -11,7 +11,7 @@ export const AlbumCoversGrid = ({ releases }: { releases: ReleaseFormatted[] }) 
         href={getListenUrl(artists, title)}
         target="_blank"
         rel="noopener noreferrer"
-        className="group relative aspect-square"
+        className="group relative aspect-square overflow-hidden rounded-sm"
         key={`${title}-${index}`}
       >
         {thumb ? (

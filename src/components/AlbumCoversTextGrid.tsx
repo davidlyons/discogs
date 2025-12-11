@@ -3,10 +3,10 @@ import { Disc3, CirclePlay } from 'lucide-react'
 import { getListenUrl } from '@/lib/getListenUrl'
 
 export const AlbumCoversTextGrid = ({ releases }: { releases: ReleaseFormatted[] }) => (
-  <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5">
+  <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5">
     {releases.map(({ url, title, artists, year, format, thumb }, index) => (
       <div
-        className="hover:bg-foreground/8 flex gap-4 overflow-hidden rounded-sm p-3
+        className="hover:bg-foreground/8 flex gap-4 overflow-hidden rounded-sm border p-3
           transition-colors"
         key={`${title}-${index}`}
       >
@@ -14,7 +14,7 @@ export const AlbumCoversTextGrid = ({ releases }: { releases: ReleaseFormatted[]
           href={getListenUrl(artists, title)}
           target="_blank"
           rel="noopener noreferrer"
-          className="group relative size-24 shrink-0"
+          className="group relative size-24 shrink-0 overflow-hidden rounded-xs"
         >
           {thumb ? (
             <img src={thumb} alt={title} className="size-full object-cover" />
