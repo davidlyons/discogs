@@ -1,7 +1,7 @@
 // https://www.discogs.com/developers#page:user-collection,header:user-collection-collection-items-by-folder
 // https://app.quicktype.io/?l=ts
 
-export type Data = {
+export type Collection = {
   pagination: Pagination
   releases: Release[]
 }
@@ -30,6 +30,7 @@ export type Release = {
 
 // tranformReleases() return type
 export type ReleaseFormatted = {
+  id: number
   title: string
   artists: Artist[]
   label: string

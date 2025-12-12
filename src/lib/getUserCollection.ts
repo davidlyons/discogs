@@ -1,22 +1,30 @@
-import type { Data, Release, ReleaseFormatted } from '@/lib/types'
+import type { Collection, Release, ReleaseFormatted } from '@/lib/types'
 
 // https://www.discogs.com/developers
 // https://www.discogs.com/developers#page:user-collection,header:user-collection-collection-items-by-folder
 // https://pixelswap.fr/entry/displaying-my-vinyl-collection-from-the-discogs-api/
 // https://dev.to/mannuelf/fun-with-remix-react-and-the-discogs-api-1e0i
 
-type fetchVinylsProps = {
+type getUserCollectionProps = {
   user: string
   page?: number
   perPage?: number
+  sort?: 'label' | 'artist' | 'title' | 'catno' | 'format' | 'rating' | 'added' | 'year'
+  sortOrder?: 'asc' | 'desc'
 }
 
 // get user's vinyl collection
-export const fetchVinyls = async ({ user, page = 1, perPage = 25 }: fetchVinylsProps) => {
+export const getUserCollection = async ({
+  user,
+  page = 1,
+  perPage = 25,
+  sort = 'added',
+  sortOrder = 'desc',
+}: getUserCollectionProps) => {
   const response = await fetch(
     // 0 is the folder ID for the main collection
     // per_page default is 50, can be up to 100
-    `https://api.discogs.com/users/${user}/collection/folders/0/releases?page=${page}&per_page=${perPage}`,
+    `https://api.discogs.com/users/${user}/collection/folders/0/releases?page=${page}&per_page=${perPage}&sort=${sort}&sort_order=${sortOrder}`,
     {
       headers: {
         Authorization: `Discogs token=${import.meta.env.DISCOGS_TOKEN}`,
@@ -28,7 +36,7 @@ export const fetchVinyls = async ({ user, page = 1, perPage = 25 }: fetchVinylsP
     throw new Error(`Error: ${response.status}`)
   }
 
-  const data: Data = await response.json()
+  const data: Collection = await response.json()
 
   return {
     pagination: data.pagination,
@@ -38,6 +46,7 @@ export const fetchVinyls = async ({ user, page = 1, perPage = 25 }: fetchVinylsP
 
 const transformReleases = (releases: Release[]): ReleaseFormatted[] => {
   return releases.map((release) => ({
+    id: release.id,
     title: release.basic_information.title,
     artists: release.basic_information.artists,
     label: release.basic_information.labels.map((label) => label.name).join(', '),
