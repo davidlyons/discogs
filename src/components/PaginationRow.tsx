@@ -111,7 +111,7 @@ export const PaginationRow = ({
               <SelectValue placeholder="per page" />
             </SelectTrigger>
             <SelectContent>
-              {[10, 25, 50, 100].map((value, i) => (
+              {[10, 25, 50, 100].map((value) => (
                 <SelectItem value={value.toString()} key={value}>
                   {value}
                 </SelectItem>

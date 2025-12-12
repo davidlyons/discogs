@@ -4,11 +4,11 @@ import { getListenUrl } from '@/lib/getListenUrl'
 
 type AlbumCoversTextGridProps = {
   releases: ReleaseFormatted[]
-  handleReleaseClick: (id: number) => void
+  onAlbumClick: (id: number) => void
 }
 
-export const AlbumCoversTextGrid = ({ releases, handleReleaseClick }: AlbumCoversTextGridProps) => {
-  const handleClick = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+export const AlbumCoversTextGrid = ({ releases, onAlbumClick }: AlbumCoversTextGridProps) => {
+  const onLinkClick = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     event.stopPropagation()
   }
 
@@ -19,11 +19,11 @@ export const AlbumCoversTextGrid = ({ releases, handleReleaseClick }: AlbumCover
           className="hover:bg-foreground/8 flex gap-4 overflow-hidden rounded-sm border p-3
             transition-colors"
           key={`${title}-${index}`}
-          onClick={() => handleReleaseClick(id)}
+          onClick={() => onAlbumClick(id)}
         >
           <a
             href={getListenUrl(artists, title)}
-            onClick={handleClick}
+            onClick={onLinkClick}
             target="_blank"
             rel="noopener noreferrer"
             className="group relative size-24 shrink-0 overflow-hidden rounded-xs"
@@ -44,7 +44,7 @@ export const AlbumCoversTextGrid = ({ releases, handleReleaseClick }: AlbumCover
           </a>
           <div className="grow">
             <h2 className="max-w-40 truncate font-bold">
-              <a className="underline-offset-4 hover:underline" href={url} onClick={handleClick}>
+              <a className="underline-offset-4 hover:underline" href={url} onClick={onLinkClick}>
                 {title}
               </a>
             </h2>
@@ -53,7 +53,7 @@ export const AlbumCoversTextGrid = ({ releases, handleReleaseClick }: AlbumCover
                 <a
                   className="underline-offset-4 hover:underline"
                   href={`https://www.discogs.com/artist/${artist.id}`}
-                  onClick={handleClick}
+                  onClick={onLinkClick}
                   key={artist.id}
                 >
                   {artist.name}

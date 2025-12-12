@@ -43,13 +43,14 @@ export const AlbumTextList = ({ releases }: { releases: ReleaseFormatted[] }) =>
           </TableCell>
 
           <TableCell>
-            <span className="opacity-50">{year}</span>
+            <span className="opacity-60">{year}</span>
           </TableCell>
 
           <TableCell>
-            <span className="opacity-50">{format}</span>
+            <span className="opacity-60">{format}</span>
           </TableCell>
 
+          {/* listen link */}
           <TableCell className="text-right">
             <a
               href={getListenUrl(artists, title)}

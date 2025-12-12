@@ -1,6 +1,5 @@
 import type { Release } from '@/lib/types-release'
 
-// https://www.discogs.com/developers
 // https://www.discogs.com/developers#page:database,header:database-release
 
 // get user's vinyl collection

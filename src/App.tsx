@@ -24,7 +24,11 @@ export const App = () => {
             }}
           />
           <Button variant="outline" size="icon" aria-label="Open Discogs profile" asChild>
-            <a href={`https://www.discogs.com/user/${user}`} target="_blank">
+            <a
+              href={`https://www.discogs.com/user/${user}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <ExternalLink />
             </a>
           </Button>

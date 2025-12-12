@@ -5,21 +5,11 @@ import { useQuery } from '@tanstack/react-query'
 import { getUserCollection } from '@/lib/getUserCollection'
 import { getRelease } from '@/lib/getRelease'
 import { Spinner } from '@/components/ui/spinner'
+import { PaginationRow } from '@/components/PaginationRow'
 import { AlbumCoversTextGrid } from '@/components/AlbumCoversTextGrid'
 import { AlbumCoversGrid } from '@/components/AlbumCoversGrid'
 import { AlbumTextList } from '@/components/AlbumTextList'
-import { PaginationRow } from '@/components/PaginationRow'
-
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerHeader,
-  DrawerTitle,
-} from '@/components/ui/drawer'
-import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table'
-import { X } from 'lucide-react'
+import { AlbumDetailsDrawer } from '@/components/AlbumDetailsDrawer'
 
 type VinylBrowserProps = {
   user: string
@@ -36,7 +26,7 @@ export function VinylBrowser({ user, page, setPage }: VinylBrowserProps) {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
   const [focusedAlbum, setFocusedAlbum] = useState<number | undefined>()
 
-  const handleReleaseClick = (id: number) => {
+  const handleAlbumClick = (id: number) => {
     setFocusedAlbum(id)
     setIsDrawerOpen(true)
   }
@@ -75,73 +65,19 @@ export function VinylBrowser({ user, page, setPage }: VinylBrowserProps) {
         />
 
         {view === 'covers-text' ? (
-          <AlbumCoversTextGrid releases={data.releases} handleReleaseClick={handleReleaseClick} />
+          <AlbumCoversTextGrid releases={data.releases} onAlbumClick={handleAlbumClick} />
         ) : view === 'covers' ? (
           <AlbumCoversGrid releases={data.releases} />
         ) : (
           view === 'text' && <AlbumTextList releases={data.releases} />
         )}
 
-        {/* album details in right side panel */}
-        <Drawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen} direction="right">
-          <DrawerContent className="outline-none">
-            <div className="overflow-y-auto">
-              {/* close button */}
-              <div className="flex justify-end">
-                <DrawerClose asChild>
-                  <button
-                    className="cursor-pointer p-4 opacity-50 transition-opacity hover:opacity-100"
-                  >
-                    <X size={32} />
-                  </button>
-                </DrawerClose>
-              </div>
-
-              {!isLoadingRelease && releaseData ? (
-                <>
-                  <DrawerHeader>
-                    <DrawerTitle>
-                      {releaseData?.artists.map((artist) => artist.name).join(' ')} –{' '}
-                      {releaseData?.title}
-                    </DrawerTitle>
-                    <DrawerDescription>{releaseData?.year}</DrawerDescription>
-                    <DrawerDescription>
-                      {releaseData?.genres} / {releaseData?.styles.join(', ')}
-                    </DrawerDescription>
-                  </DrawerHeader>
-                  <div className="p-4">
-                    <img
-                      src={releaseData.images[0].uri}
-                      alt={releaseData.title}
-                      className="mb-5 aspect-square rounded-md object-cover"
-                    />
-                    <Table className="table-fixed">
-                      <TableBody>
-                        {releaseData.tracklist.map(({ position, title, duration, type_ }) => (
-                          <TableRow key={`${releaseData.title}-${position}`}>
-                            <TableCell>{position}</TableCell>
-                            <TableCell className="w-2/3 truncate overflow-hidden">
-                              {type_ === 'heading' ? <h3 className="font-bold">{title}</h3> : title}
-                            </TableCell>
-                            <TableCell>{duration}</TableCell>
-                          </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  </div>
-                </>
-              ) : (
-                <div className="p-4">
-                  <DrawerTitle />
-                  <DrawerDescription />
-                  <div className="flex items-center gap-4">
-                    <Spinner /> Loading...
-                  </div>
-                </div>
-              )}
-            </div>
-          </DrawerContent>
-        </Drawer>
+        <AlbumDetailsDrawer
+          open={isDrawerOpen}
+          onOpenChange={setIsDrawerOpen}
+          isLoading={isLoadingRelease}
+          release={releaseData}
+        />
       </>
     )
   }
