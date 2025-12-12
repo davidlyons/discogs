@@ -1,4 +1,4 @@
-import type { Collection, Release, ReleaseFormatted } from '@/lib/types'
+import type { Collection } from '@/lib/types-collection'
 
 // https://www.discogs.com/developers
 // https://www.discogs.com/developers#page:user-collection,header:user-collection-collection-items-by-folder
@@ -38,22 +38,5 @@ export const getUserCollection = async ({
 
   const data: Collection = await response.json()
 
-  return {
-    pagination: data.pagination,
-    releases: transformReleases(data.releases),
-  }
-}
-
-const transformReleases = (releases: Release[]): ReleaseFormatted[] => {
-  return releases.map((release) => ({
-    id: release.id,
-    title: release.basic_information.title,
-    artists: release.basic_information.artists,
-    label: release.basic_information.labels.map((label) => label.name).join(', '),
-    year: release.basic_information.year,
-    thumb: release.basic_information.thumb,
-    image: release.basic_information.cover_image,
-    format: release.basic_information.formats.map((format) => format.name).join(', '),
-    url: `https://www.discogs.com/release/${release.basic_information.id}`,
-  }))
+  return data
 }

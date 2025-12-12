@@ -1,4 +1,4 @@
-import type { ReleaseFormatted } from '@/lib/types'
+import type { Release } from '@/lib/types-collection'
 import { CirclePlay, ListMusic } from 'lucide-react'
 import { getListenUrl } from '@/lib/getListenUrl'
 import {
@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/table'
 
 type AlbumTextListProps = {
-  releases: ReleaseFormatted[]
+  releases: Release[]
   onAlbumClick: (id: number) => void
 }
 
@@ -28,10 +28,13 @@ export const AlbumTextList = ({ releases, onAlbumClick }: AlbumTextListProps) =>
       </TableRow>
     </TableHeader>
     <TableBody>
-      {releases.map(({ id, url, title, artists, year, format }, index) => (
+      {releases.map(({ basic_information: { id, title, artists, year, formats } }, index) => (
         <TableRow className="group" key={`${title}-${index}`}>
           <TableCell>
-            <a className="font-bold underline-offset-4 hover:underline" href={url}>
+            <a
+              className="font-bold underline-offset-4 hover:underline"
+              href={`https://www.discogs.com/release/${id}`}
+            >
               {title}
             </a>
           </TableCell>
@@ -53,7 +56,7 @@ export const AlbumTextList = ({ releases, onAlbumClick }: AlbumTextListProps) =>
           </TableCell>
 
           <TableCell>
-            <span className="opacity-60">{format}</span>
+            <span className="opacity-60">{formats.map((format) => format.name).join(', ')}</span>
           </TableCell>
 
           {/* details button */}

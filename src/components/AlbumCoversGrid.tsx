@@ -1,12 +1,12 @@
-import type { ReleaseFormatted } from '@/lib/types'
+import type { Release } from '@/lib/types-collection'
 import { Disc3, CirclePlay } from 'lucide-react'
 import { getListenUrl } from '@/lib/getListenUrl'
 
-export const AlbumCoversGrid = ({ releases }: { releases: ReleaseFormatted[] }) => (
+export const AlbumCoversGrid = ({ releases }: { releases: Release[] }) => (
   <div
     className="grid grid-cols-3 gap-4 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 2xl:grid-cols-10"
   >
-    {releases.map(({ title, artists, thumb }, index) => (
+    {releases.map(({ basic_information: { title, artists, thumb } }, index) => (
       <a
         href={getListenUrl(artists, title)}
         target="_blank"

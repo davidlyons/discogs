@@ -1,14 +1,14 @@
-import type { ReleaseFormatted } from '@/lib/types'
+import type { Release } from '@/lib/types-collection'
 import { Disc3 } from 'lucide-react'
 
 type AlbumCoversTextGridProps = {
-  releases: ReleaseFormatted[]
+  releases: Release[]
   onAlbumClick: (id: number) => void
 }
 
 export const AlbumCoversTextGrid = ({ releases, onAlbumClick }: AlbumCoversTextGridProps) => (
   <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5">
-    {releases.map(({ id, title, artists, year, format, thumb }, index) => (
+    {releases.map(({ basic_information: { id, title, artists, year, formats, thumb } }, index) => (
       <button
         className="hover:bg-foreground/8 group flex cursor-pointer gap-4 overflow-hidden rounded-sm
           border p-3 text-start transition-colors"
@@ -32,7 +32,9 @@ export const AlbumCoversTextGrid = ({ releases, onAlbumClick }: AlbumCoversTextG
             {artists.map((artist) => artist.name).join(', ')}
           </p>
           <p className="text-sm">{year}</p>
-          <p className="max-w-40 truncate text-sm opacity-50">{format}</p>
+          <p className="max-w-40 truncate text-sm opacity-50">
+            {formats.map((format) => format.name).join(', ')}
+          </p>
         </div>
       </button>
     ))}

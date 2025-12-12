@@ -1,6 +1,6 @@
 'use client'
 
-import type { Pagination as PaginationType } from '@/lib/types'
+import type { Pagination as PaginationType } from '@/lib/types-collection'
 
 import {
   Pagination,

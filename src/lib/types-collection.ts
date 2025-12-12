@@ -28,19 +28,6 @@ export type Release = {
   notes: Note[]
 }
 
-// tranformReleases() return type
-export type ReleaseFormatted = {
-  id: number
-  title: string
-  artists: Artist[]
-  label: string
-  year: number
-  thumb: string
-  image: string
-  format: string
-  url: string
-}
-
 export type BasicInformation = {
   id: number
   title: string
