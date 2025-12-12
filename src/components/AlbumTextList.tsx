@@ -1,5 +1,5 @@
 import type { ReleaseFormatted } from '@/lib/types'
-import { CirclePlay } from 'lucide-react'
+import { CirclePlay, ListMusic } from 'lucide-react'
 import { getListenUrl } from '@/lib/getListenUrl'
 import {
   Table,
@@ -10,7 +10,12 @@ import {
   TableCell,
 } from '@/components/ui/table'
 
-export const AlbumTextList = ({ releases }: { releases: ReleaseFormatted[] }) => (
+type AlbumTextListProps = {
+  releases: ReleaseFormatted[]
+  onAlbumClick: (id: number) => void
+}
+
+export const AlbumTextList = ({ releases, onAlbumClick }: AlbumTextListProps) => (
   <Table className="table-fixed">
     <TableHeader>
       <TableRow>
@@ -18,11 +23,12 @@ export const AlbumTextList = ({ releases }: { releases: ReleaseFormatted[] }) =>
         <TableHead>Artist</TableHead>
         <TableHead>Year</TableHead>
         <TableHead>Format</TableHead>
-        <TableHead></TableHead>
+        <TableHead className="w-16 text-center">Details</TableHead>
+        <TableHead className="w-16 text-center">Listen</TableHead>
       </TableRow>
     </TableHeader>
     <TableBody>
-      {releases.map(({ url, title, artists, year, format }, index) => (
+      {releases.map(({ id, url, title, artists, year, format }, index) => (
         <TableRow className="group" key={`${title}-${index}`}>
           <TableCell>
             <a className="font-bold underline-offset-4 hover:underline" href={url}>
@@ -50,8 +56,20 @@ export const AlbumTextList = ({ releases }: { releases: ReleaseFormatted[] }) =>
             <span className="opacity-60">{format}</span>
           </TableCell>
 
+          {/* details button */}
+          <TableCell className="text-center">
+            <button
+              className="cursor-pointer opacity-30 transition-opacity group-hover:opacity-50
+                hover:opacity-100"
+              onClick={() => onAlbumClick(id)}
+            >
+              <ListMusic size={20} />
+              <span className="sr-only">Details</span>
+            </button>
+          </TableCell>
+
           {/* listen link */}
-          <TableCell className="text-right">
+          <TableCell className="text-center">
             <a
               href={getListenUrl(artists, title)}
               target="_blank"
@@ -59,6 +77,7 @@ export const AlbumTextList = ({ releases }: { releases: ReleaseFormatted[] }) =>
               className="opacity-30 transition-opacity group-hover:opacity-50 hover:opacity-100"
             >
               <CirclePlay size={20} />
+              <span className="sr-only">YouTube</span>
             </a>
           </TableCell>
         </TableRow>

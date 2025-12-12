@@ -31,7 +31,7 @@ export function VinylBrowser({ user, page, setPage }: VinylBrowserProps) {
     setIsSheetOpen(true)
   }
 
-  const { isLoading, data } = useQuery({
+  const { isLoading: isLoadingCollection, data: collectionData } = useQuery({
     queryKey: ['collection', user, page, perPage],
     queryFn: () => getUserCollection({ user, page, perPage }),
     staleTime: 24 * 60 * 60 * 1000, // 1 day
@@ -44,7 +44,7 @@ export function VinylBrowser({ user, page, setPage }: VinylBrowserProps) {
     enabled: !!focusedAlbum,
   })
 
-  if (isLoading) {
+  if (isLoadingCollection) {
     return (
       <div className="flex items-center gap-4">
         <Spinner /> Loading...
@@ -52,11 +52,11 @@ export function VinylBrowser({ user, page, setPage }: VinylBrowserProps) {
     )
   }
 
-  if (data) {
+  if (collectionData) {
     return (
       <>
         <PaginationRow
-          pagination={data.pagination}
+          pagination={collectionData.pagination}
           setPage={setPage}
           perPage={perPage}
           setPerPage={setPerPage}
@@ -65,12 +65,12 @@ export function VinylBrowser({ user, page, setPage }: VinylBrowserProps) {
         />
 
         {view === 'covers-text' ? (
-          <AlbumCoversTextGrid releases={data.releases} onAlbumClick={handleAlbumClick} />
+          <AlbumCoversTextGrid releases={collectionData.releases} onAlbumClick={handleAlbumClick} />
         ) : view === 'covers' ? (
-          <AlbumCoversGrid releases={data.releases} />
-        ) : (
-          view === 'text' && <AlbumTextList releases={data.releases} />
-        )}
+          <AlbumCoversGrid releases={collectionData.releases} />
+        ) : view === 'text' ? (
+          <AlbumTextList releases={collectionData.releases} onAlbumClick={handleAlbumClick} />
+        ) : null}
 
         <AlbumDetails
           open={isSheetOpen}

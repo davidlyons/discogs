@@ -43,7 +43,7 @@ export const AlbumDetails = ({ open, onOpenChange, isLoading, release }: AlbumDe
       <SheetContent
         side="right"
         // don't close when clicking outside
-        onPointerDownOutside={(e) => {
+        onInteractOutside={(e) => {
           e.preventDefault()
         }}
       >
@@ -53,6 +53,7 @@ export const AlbumDetails = ({ open, onOpenChange, isLoading, release }: AlbumDe
             <SheetClose asChild>
               <button className="cursor-pointer p-5 opacity-50 transition-opacity hover:opacity-100">
                 <XIcon size={32} />
+                <span className="sr-only">Close</span>
               </button>
             </SheetClose>
           </div>
@@ -61,7 +62,26 @@ export const AlbumDetails = ({ open, onOpenChange, isLoading, release }: AlbumDe
             <>
               <SheetHeader>
                 <SheetTitle className="text-balance">
-                  {release.artists.map((artist) => artist.name).join(' ')} – {release.title}
+                  {release.artists.map((artist) => (
+                    <a
+                      className="underline-offset-4 hover:underline"
+                      href={`https://www.discogs.com/artist/${artist.id}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      key={artist.id}
+                    >
+                      {artist.name}
+                    </a>
+                  ))}
+                  {` – `}
+                  <a
+                    className="underline-offset-4 hover:underline"
+                    href={`https://www.discogs.com/release/${release.id}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {release.title}
+                  </a>
                 </SheetTitle>
                 <SheetDescription>{release.year}</SheetDescription>
                 <SheetDescription>
