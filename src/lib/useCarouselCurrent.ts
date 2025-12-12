@@ -10,6 +10,13 @@ export const useCarouselCurrent = (api: CarouselApi) => {
     setCurrent(api.selectedScrollSnap() + 1)
   }, [])
 
+  // on reinit, set count and go back to first slide
+  const reinit = useCallback((api: CarouselApi) => {
+    if (!api) return
+    setCount(api.scrollSnapList().length)
+    api.scrollTo(0, true)
+  }, [])
+
   useEffect(() => {
     if (!api) return
 
@@ -17,11 +24,13 @@ export const useCarouselCurrent = (api: CarouselApi) => {
     updateCurrent(api)
 
     api.on('select', updateCurrent)
+    api.on('reInit', reinit)
 
     return () => {
       api.off('select', updateCurrent)
+      api.off('reInit', reinit)
     }
-  }, [api, updateCurrent])
+  }, [api, updateCurrent, reinit])
 
   return {
     current,
