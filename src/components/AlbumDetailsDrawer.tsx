@@ -1,19 +1,20 @@
+import { useState } from 'react'
+import { XIcon, CirclePlay, Disc3 } from 'lucide-react'
+
 import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerHeader,
-  DrawerTitle,
-} from '@/components/ui/drawer'
-import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table'
-import { X, CirclePlay, Disc3 } from 'lucide-react'
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+} from '@/components/ui/sheet'
+
 import { Spinner } from '@/components/ui/spinner'
 import { Button } from '@/components/ui/button'
 import type { Release } from '@/lib/types-release'
 import { getListenUrl } from '@/lib/getListenUrl'
 
-import { useState } from 'react'
 import {
   Carousel,
   CarouselContent,
@@ -23,6 +24,8 @@ import {
   type CarouselApi,
 } from '@/components/ui/carousel'
 import { useCarouselCurrent } from '@/lib/useCarouselCurrent'
+
+import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table'
 
 type AlbumDetailsDrawerProps = {
   open: boolean
@@ -41,29 +44,35 @@ export const AlbumDetailsDrawer = ({
   const { current, count } = useCarouselCurrent(api)
 
   return (
-    <Drawer open={open} onOpenChange={onOpenChange} direction="right">
-      <DrawerContent className="outline-none">
+    <Sheet open={open} onOpenChange={onOpenChange} modal={false}>
+      <SheetContent
+        side="right"
+        // don't close when clicking outside
+        onPointerDownOutside={(e) => {
+          e.preventDefault()
+        }}
+      >
         <div className="overflow-y-auto">
           {/* close button */}
           <div className="flex justify-end">
-            <DrawerClose asChild>
+            <SheetClose asChild>
               <button className="cursor-pointer p-5 opacity-50 transition-opacity hover:opacity-100">
-                <X size={32} />
+                <XIcon size={32} />
               </button>
-            </DrawerClose>
+            </SheetClose>
           </div>
 
           {!isLoading && release ? (
             <>
-              <DrawerHeader>
-                <DrawerTitle className="text-balance">
+              <SheetHeader>
+                <SheetTitle className="text-balance">
                   {release.artists.map((artist) => artist.name).join(' ')} – {release.title}
-                </DrawerTitle>
-                <DrawerDescription>{release.year}</DrawerDescription>
-                <DrawerDescription>
+                </SheetTitle>
+                <SheetDescription>{release.year}</SheetDescription>
+                <SheetDescription>
                   {release.genres} / {release.styles.join(', ')}
-                </DrawerDescription>
-              </DrawerHeader>
+                </SheetDescription>
+              </SheetHeader>
 
               <div className="px-5 pb-5">
                 {/* links */}
@@ -89,25 +98,33 @@ export const AlbumDetailsDrawer = ({
                   </Button>
                 </div>
 
-                {/* iamges carousel */}
-                <Carousel opts={{ loop: true }} setApi={setApi} className="mb-2">
-                  <CarouselContent>
-                    {release.images.map((image) => (
-                      <CarouselItem>
-                        <img
-                          src={image.uri}
-                          alt={release.title}
-                          className="aspect-square rounded-md object-contain"
-                          loading="lazy"
-                        />
-                      </CarouselItem>
-                    ))}
-                  </CarouselContent>
-                  <CarouselPrevious />
-                  <CarouselNext />
-                </Carousel>
-                <div className="text-muted-foreground mb-5 text-center text-sm">
-                  {`${current} / ${count}`}
+                {/* images carousel */}
+                <div className="mb-5">
+                  <Carousel opts={{ loop: true }} setApi={setApi} className="mb-2">
+                    <CarouselContent>
+                      {release.images.map((image) => (
+                        <CarouselItem key={image.uri}>
+                          <img
+                            src={image.uri}
+                            alt={release.title}
+                            className="aspect-square w-full rounded-md object-contain"
+                            loading="lazy"
+                          />
+                        </CarouselItem>
+                      ))}
+                    </CarouselContent>
+                    {count > 1 && (
+                      <>
+                        <CarouselPrevious />
+                        <CarouselNext />
+                      </>
+                    )}
+                  </Carousel>
+                  {count > 1 && (
+                    <div className="text-muted-foreground text-center text-sm">
+                      {`${current} / ${count}`}
+                    </div>
+                  )}
                 </div>
 
                 {/* tracklist */}
@@ -128,15 +145,15 @@ export const AlbumDetailsDrawer = ({
             </>
           ) : (
             <div className="p-5">
-              <DrawerTitle />
-              <DrawerDescription />
+              <SheetTitle />
+              <SheetDescription />
               <div className="flex items-center gap-4">
                 <Spinner /> Loading...
               </div>
             </div>
           )}
         </div>
-      </DrawerContent>
-    </Drawer>
+      </SheetContent>
+    </Sheet>
   )
 }

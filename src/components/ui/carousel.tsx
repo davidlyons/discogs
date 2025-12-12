@@ -172,7 +172,7 @@ function CarouselPrevious({
       variant={variant}
       size={size}
       className={cn(
-        'absolute hidden size-8 rounded-full group-hover:flex',
+        'absolute size-8 rounded-full opacity-0 group-hover:opacity-100',
         orientation === 'horizontal'
           ? 'top-1/2 left-3 -translate-y-1/2'
           : '-top-12 left-1/2 -translate-x-1/2 rotate-90',
@@ -202,7 +202,7 @@ function CarouselNext({
       variant={variant}
       size={size}
       className={cn(
-        'absolute hidden size-8 rounded-full group-hover:flex',
+        'absolute size-8 rounded-full opacity-0 group-hover:opacity-100',
         orientation === 'horizontal'
           ? 'top-1/2 right-3 -translate-y-1/2'
           : '-bottom-12 left-1/2 -translate-x-1/2 rotate-90',
