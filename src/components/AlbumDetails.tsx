@@ -29,7 +29,7 @@ import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table'
 
 type AlbumDetailsProps = {
   open: boolean
-  onOpenChange: React.Dispatch<React.SetStateAction<boolean>>
+  onOpenChange: (open: boolean) => void
   isLoading: boolean
   release?: Release
 }

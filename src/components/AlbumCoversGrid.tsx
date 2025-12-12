@@ -1,33 +1,41 @@
 import type { Release } from '@/lib/types-collection'
 import { Disc3, CirclePlay } from 'lucide-react'
 import { getListenUrl } from '@/lib/getListenUrl'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 
 export const AlbumCoversGrid = ({ releases }: { releases: Release[] }) => (
   <div
     className="grid grid-cols-3 gap-4 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 2xl:grid-cols-10"
   >
     {releases.map(({ basic_information: { title, artists, thumb } }, index) => (
-      <a
-        href={getListenUrl(artists, title)}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="group relative aspect-square overflow-hidden rounded-sm"
-        key={`${title}-${index}`}
-      >
-        {thumb ? (
-          <img src={thumb} alt={title} className="size-full object-cover" />
-        ) : (
-          <div className="bg-card flex size-full items-center justify-center">
-            <Disc3 size={64} className="opacity-15" />
-          </div>
-        )}
-        <div
-          className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0
-            transition-opacity group-hover:opacity-100"
-        >
-          <CirclePlay size={64} strokeWidth={1} className="text-white" />
-        </div>
-      </a>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <a
+            href={getListenUrl(artists, title)}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group relative aspect-square overflow-hidden rounded-sm"
+            key={`${title}-${index}`}
+          >
+            {thumb ? (
+              <img src={thumb} alt={title} className="size-full object-cover" />
+            ) : (
+              <div className="bg-card flex size-full items-center justify-center">
+                <Disc3 size={64} className="opacity-15" />
+              </div>
+            )}
+            <div
+              className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0
+                transition-opacity group-hover:opacity-100"
+            >
+              <CirclePlay size={64} strokeWidth={1} className="text-white" />
+            </div>
+          </a>
+        </TooltipTrigger>
+        <TooltipContent className="max-w-xl">
+          <p>{`${artists.map((artist) => artist.name).join(', ')} – ${title}`}</p>
+        </TooltipContent>
+      </Tooltip>
     ))}
   </div>
 )

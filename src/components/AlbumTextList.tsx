@@ -9,13 +9,15 @@ import {
   TableHead,
   TableCell,
 } from '@/components/ui/table'
+import { cn } from '@/lib/utils'
 
 type AlbumTextListProps = {
   releases: Release[]
   onAlbumClick: (id: number) => void
+  activeAlbum?: number
 }
 
-export const AlbumTextList = ({ releases, onAlbumClick }: AlbumTextListProps) => (
+export const AlbumTextList = ({ releases, onAlbumClick, activeAlbum }: AlbumTextListProps) => (
   <Table className="table-fixed">
     <TableHeader>
       <TableRow>
@@ -29,7 +31,10 @@ export const AlbumTextList = ({ releases, onAlbumClick }: AlbumTextListProps) =>
     </TableHeader>
     <TableBody>
       {releases.map(({ basic_information: { id, title, artists, year, formats } }, index) => (
-        <TableRow className="group" key={`${title}-${index}`}>
+        <TableRow
+          className={cn('group', id === activeAlbum && 'bg-muted/70')}
+          key={`${title}-${index}`}
+        >
           <TableCell>
             <a
               className="font-bold underline-offset-4 hover:underline"

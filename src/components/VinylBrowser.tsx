@@ -65,11 +65,19 @@ export function VinylBrowser({ user, page, setPage }: VinylBrowserProps) {
         />
 
         {view === 'covers-text' ? (
-          <AlbumCoversTextGrid releases={collectionData.releases} onAlbumClick={handleAlbumClick} />
+          <AlbumCoversTextGrid
+            releases={collectionData.releases}
+            onAlbumClick={handleAlbumClick}
+            activeAlbum={isSheetOpen ? focusedAlbum : undefined}
+          />
         ) : view === 'covers' ? (
           <AlbumCoversGrid releases={collectionData.releases} />
         ) : view === 'text' ? (
-          <AlbumTextList releases={collectionData.releases} onAlbumClick={handleAlbumClick} />
+          <AlbumTextList
+            releases={collectionData.releases}
+            onAlbumClick={handleAlbumClick}
+            activeAlbum={isSheetOpen ? focusedAlbum : undefined}
+          />
         ) : null}
 
         <AlbumDetails

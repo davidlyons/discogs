@@ -1,17 +1,26 @@
 import type { Release } from '@/lib/types-collection'
 import { Disc3 } from 'lucide-react'
+import { cn } from '@/lib/utils'
 
 type AlbumCoversTextGridProps = {
   releases: Release[]
   onAlbumClick: (id: number) => void
+  activeAlbum?: number
 }
 
-export const AlbumCoversTextGrid = ({ releases, onAlbumClick }: AlbumCoversTextGridProps) => (
+export const AlbumCoversTextGrid = ({
+  releases,
+  onAlbumClick,
+  activeAlbum,
+}: AlbumCoversTextGridProps) => (
   <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5">
     {releases.map(({ basic_information: { id, title, artists, year, formats, thumb } }, index) => (
       <button
-        className="hover:bg-foreground/8 group flex cursor-pointer gap-4 overflow-hidden rounded-sm
-          border p-3 text-start transition-colors"
+        className={cn(
+          `hover:bg-foreground/8 group flex cursor-pointer gap-4 overflow-hidden rounded-sm border
+          p-3 text-start transition-colors`,
+          id === activeAlbum && 'outline-2 outline-offset-2'
+        )}
         key={`${title}-${index}`}
         onClick={() => onAlbumClick(id)}
       >
