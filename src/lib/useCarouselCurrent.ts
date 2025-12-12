@@ -6,7 +6,8 @@ export const useCarouselCurrent = (api: CarouselApi) => {
   const [count, setCount] = useState(0)
 
   const updateCurrent = useCallback((api: CarouselApi) => {
-    setCurrent(api!.selectedScrollSnap() + 1)
+    if (!api) return
+    setCurrent(api.selectedScrollSnap() + 1)
   }, [])
 
   useEffect(() => {

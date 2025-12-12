@@ -27,19 +27,14 @@ import { useCarouselCurrent } from '@/lib/useCarouselCurrent'
 
 import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table'
 
-type AlbumDetailsDrawerProps = {
+type AlbumDetailsProps = {
   open: boolean
   onOpenChange: React.Dispatch<React.SetStateAction<boolean>>
   isLoading: boolean
   release?: Release
 }
 
-export const AlbumDetailsDrawer = ({
-  open,
-  onOpenChange,
-  isLoading,
-  release,
-}: AlbumDetailsDrawerProps) => {
+export const AlbumDetails = ({ open, onOpenChange, isLoading, release }: AlbumDetailsProps) => {
   const [api, setApi] = useState<CarouselApi>()
   const { current, count } = useCarouselCurrent(api)
 

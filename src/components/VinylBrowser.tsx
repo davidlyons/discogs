@@ -9,7 +9,7 @@ import { PaginationRow } from '@/components/PaginationRow'
 import { AlbumCoversTextGrid } from '@/components/AlbumCoversTextGrid'
 import { AlbumCoversGrid } from '@/components/AlbumCoversGrid'
 import { AlbumTextList } from '@/components/AlbumTextList'
-import { AlbumDetailsDrawer } from '@/components/AlbumDetailsDrawer'
+import { AlbumDetails } from '@/components/AlbumDetails'
 
 type VinylBrowserProps = {
   user: string
@@ -23,12 +23,12 @@ export function VinylBrowser({ user, page, setPage }: VinylBrowserProps) {
   const [perPage, setPerPage] = useState(25)
   const [view, setView] = useState<View>('covers-text')
 
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false)
+  const [isSheetOpen, setIsSheetOpen] = useState(false)
   const [focusedAlbum, setFocusedAlbum] = useState<number | undefined>()
 
   const handleAlbumClick = (id: number) => {
     setFocusedAlbum(id)
-    setIsDrawerOpen(true)
+    setIsSheetOpen(true)
   }
 
   const { isLoading, data } = useQuery({
@@ -72,9 +72,9 @@ export function VinylBrowser({ user, page, setPage }: VinylBrowserProps) {
           view === 'text' && <AlbumTextList releases={data.releases} />
         )}
 
-        <AlbumDetailsDrawer
-          open={isDrawerOpen}
-          onOpenChange={setIsDrawerOpen}
+        <AlbumDetails
+          open={isSheetOpen}
+          onOpenChange={setIsSheetOpen}
           isLoading={isLoadingRelease}
           release={releaseData}
         />
