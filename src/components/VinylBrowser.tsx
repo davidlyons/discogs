@@ -32,6 +32,12 @@ export function VinylBrowser({ user, page, setPage }: VinylBrowserProps) {
     setIsSheetOpen(true)
   }
 
+  const onSheetAnimEnd = () => {
+    if (!isSheetOpen) {
+      setFocusedAlbum(undefined)
+    }
+  }
+
   const { isLoading: isLoadingCollection, data: collectionData } = useQuery({
     queryKey: ['collection', user, page, perPage],
     queryFn: () => getUserCollection({ user, page, perPage }),
@@ -88,6 +94,7 @@ export function VinylBrowser({ user, page, setPage }: VinylBrowserProps) {
         <AlbumDetails
           open={isSheetOpen}
           onOpenChange={setIsSheetOpen}
+          onAnimationEnd={onSheetAnimEnd}
           isLoading={isLoadingRelease}
           release={releaseData}
         />

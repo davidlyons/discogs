@@ -30,11 +30,18 @@ import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table'
 type AlbumDetailsProps = {
   open: boolean
   onOpenChange: (open: boolean) => void
+  onAnimationEnd?: () => void
   isLoading: boolean
   release?: Release
 }
 
-export const AlbumDetails = ({ open, onOpenChange, isLoading, release }: AlbumDetailsProps) => {
+export const AlbumDetails = ({
+  open,
+  onOpenChange,
+  onAnimationEnd,
+  isLoading,
+  release,
+}: AlbumDetailsProps) => {
   const [api, setApi] = useState<CarouselApi>()
   const { current, count } = useCarouselCurrent(api)
 
@@ -42,6 +49,7 @@ export const AlbumDetails = ({ open, onOpenChange, isLoading, release }: AlbumDe
     <Sheet open={open} onOpenChange={onOpenChange} modal={false}>
       <SheetContent
         side="right"
+        onAnimationEnd={onAnimationEnd}
         // don't close when clicking outside
         onInteractOutside={(e) => {
           e.preventDefault()
