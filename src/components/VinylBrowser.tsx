@@ -25,6 +25,7 @@ export function VinylBrowser({ user, page, setPage }: VinylBrowserProps) {
 
   const [isSheetOpen, setIsSheetOpen] = useState(false)
   const [focusedAlbum, setFocusedAlbum] = useState<number | undefined>()
+  const activeAlbum = isSheetOpen ? focusedAlbum : undefined
 
   const handleAlbumClick = (id: number) => {
     setFocusedAlbum(id)
@@ -68,15 +69,19 @@ export function VinylBrowser({ user, page, setPage }: VinylBrowserProps) {
           <AlbumCoversTextGrid
             releases={collectionData.releases}
             onAlbumClick={handleAlbumClick}
-            activeAlbum={isSheetOpen ? focusedAlbum : undefined}
+            activeAlbum={activeAlbum}
           />
         ) : view === 'covers' ? (
-          <AlbumCoversGrid releases={collectionData.releases} />
+          <AlbumCoversGrid
+            releases={collectionData.releases}
+            onAlbumClick={handleAlbumClick}
+            activeAlbum={activeAlbum}
+          />
         ) : view === 'text' ? (
           <AlbumTextList
             releases={collectionData.releases}
             onAlbumClick={handleAlbumClick}
-            activeAlbum={isSheetOpen ? focusedAlbum : undefined}
+            activeAlbum={activeAlbum}
           />
         ) : null}
 

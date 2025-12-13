@@ -85,7 +85,7 @@ export const AlbumDetails = ({ open, onOpenChange, isLoading, release }: AlbumDe
                 </SheetTitle>
                 <SheetDescription>{release.year}</SheetDescription>
                 <SheetDescription>
-                  {release.genres} / {release.styles.join(', ')}
+                  {`${release.genres.join(', ')} / ${release.styles.join(', ')}`}
                 </SheetDescription>
               </SheetHeader>
 
