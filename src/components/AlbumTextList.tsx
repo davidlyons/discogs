@@ -45,6 +45,8 @@ export const AlbumTextList = ({ releases, onAlbumClick, activeAlbum }: AlbumText
               <a
                 className="font-bold underline-offset-4 hover:underline"
                 href={`https://www.discogs.com/release/${id}`}
+                target="_blank"
+                rel="noopener noreferrer"
               >
                 {title}
               </a>
@@ -55,6 +57,8 @@ export const AlbumTextList = ({ releases, onAlbumClick, activeAlbum }: AlbumText
                 <a
                   className="underline-offset-4 hover:underline"
                   href={`https://www.discogs.com/artist/${artist.id}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   key={artist.id}
                 >
                   {artist.name}
