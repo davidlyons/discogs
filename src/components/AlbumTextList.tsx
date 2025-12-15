@@ -18,7 +18,7 @@ type AlbumTextListProps = {
 }
 
 export const AlbumTextList = ({ releases, onAlbumClick, activeAlbum }: AlbumTextListProps) => (
-  <Table className="table-fixed">
+  <Table className="w-auto table-fixed md:w-full">
     <TableHeader>
       <TableRow>
         <TableHead className="w-14"></TableHead>
@@ -38,10 +38,13 @@ export const AlbumTextList = ({ releases, onAlbumClick, activeAlbum }: AlbumText
             className={cn('group', id === activeAlbum && 'bg-muted/70')}
             key={`${title}-${index}`}
           >
+            {/* thumb image */}
             <TableCell className="flex justify-center">
               <img src={thumb} alt={title} className="inline size-5 scale-150 rounded-xs" />
             </TableCell>
-            <TableCell>
+
+            {/* title */}
+            <TableCell className="truncate">
               <a
                 className="font-bold underline-offset-4 hover:underline"
                 href={`https://www.discogs.com/release/${id}`}
@@ -52,7 +55,7 @@ export const AlbumTextList = ({ releases, onAlbumClick, activeAlbum }: AlbumText
               </a>
             </TableCell>
 
-            <TableCell>
+            <TableCell className="truncate">
               {artists.map((artist) => (
                 <a
                   className="underline-offset-4 hover:underline"
@@ -66,15 +69,18 @@ export const AlbumTextList = ({ releases, onAlbumClick, activeAlbum }: AlbumText
               ))}
             </TableCell>
 
+            {/* year */}
             <TableCell>
               <span className="opacity-60">{year}</span>
             </TableCell>
 
-            <TableCell>
+            {/* genres */}
+            <TableCell className="truncate">
               <span className="opacity-60">{genres.join(', ')}</span>
             </TableCell>
 
-            <TableCell>
+            {/* format */}
+            <TableCell className="truncate">
               <span className="opacity-60">{formats.map((format) => format.name).join(', ')}</span>
             </TableCell>
 

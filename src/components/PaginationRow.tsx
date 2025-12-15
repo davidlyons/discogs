@@ -1,5 +1,3 @@
-'use client'
-
 import type { Pagination as PaginationType } from '@/lib/types-collection'
 
 import {
@@ -121,7 +119,7 @@ export const PaginationRow = ({
           albums
         </div>
 
-        {/* Layout control */}
+        {/* Layout/View control */}
         <ToggleGroup
           type="single"
           spacing={2}
