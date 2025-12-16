@@ -8,6 +8,7 @@ import { AlbumCoversTextGrid } from '@/components/AlbumCoversTextGrid'
 import { AlbumCoversGrid } from '@/components/AlbumCoversGrid'
 import { AlbumTextList } from '@/components/AlbumTextList'
 import { AlbumDetails } from '@/components/AlbumDetails'
+import { sortOptions } from '@/lib/getUserCollection'
 
 type VinylBrowserProps = {
   user: string
@@ -19,6 +20,7 @@ export type View = 'covers' | 'covers-text' | 'text'
 
 export function VinylBrowser({ user, page, setPage }: VinylBrowserProps) {
   const [perPage, setPerPage] = useState(25)
+  const [sort, setSort] = useState(sortOptions[0])
   const [view, setView] = useState<View>('covers-text')
 
   const [isSheetOpen, setIsSheetOpen] = useState(false)
@@ -37,8 +39,9 @@ export function VinylBrowser({ user, page, setPage }: VinylBrowserProps) {
   }
 
   const { isLoading: isLoadingCollection, data: collectionData } = useQuery({
-    queryKey: ['collection', user, page, perPage],
-    queryFn: () => getUserCollection({ user, page, perPage }),
+    queryKey: ['collection', user, page, perPage, sort.name, sort.order],
+    queryFn: () =>
+      getUserCollection({ user, page, perPage, sort: sort.name, sortOrder: sort.order }),
     staleTime: 24 * 60 * 60 * 1000, // 1 day
   })
 
@@ -67,6 +70,8 @@ export function VinylBrowser({ user, page, setPage }: VinylBrowserProps) {
           setPerPage={setPerPage}
           view={view}
           setView={setView}
+          sort={sort}
+          setSort={setSort}
         />
 
         {view === 'covers-text' ? (

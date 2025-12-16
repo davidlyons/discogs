@@ -54,8 +54,9 @@ export type Artist = {
 
 export type Format = {
   qty: string
-  descriptions: string[]
   name: string
+  descriptions: string[]
+  text?: string
 }
 
 export type Label = {

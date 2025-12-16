@@ -22,6 +22,8 @@ import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
 import { LayoutGrid, LayoutList, AlignJustify } from 'lucide-react'
 import type { View } from '@/components/VinylBrowser'
 
+import { type SortingOption, sortOptions } from '@/lib/getUserCollection'
+
 type PaginationRowProps = {
   pagination: PaginationType
   perPage: number
@@ -29,6 +31,8 @@ type PaginationRowProps = {
   setPerPage: React.Dispatch<React.SetStateAction<number>>
   view: View
   setView: React.Dispatch<React.SetStateAction<View>>
+  sort: SortingOption
+  setSort: React.Dispatch<React.SetStateAction<SortingOption>>
 }
 
 export const PaginationRow = ({
@@ -38,6 +42,8 @@ export const PaginationRow = ({
   setPerPage,
   view,
   setView,
+  sort,
+  setSort,
 }: PaginationRowProps) => {
   return (
     <div className="mb-4 flex flex-wrap items-center justify-between gap-4 text-sm">
@@ -94,8 +100,8 @@ export const PaginationRow = ({
         of <span className="mx-1 font-bold">{pagination.items}</span> albums
       </div>
 
-      {/* per page select */}
       <div className="flex flex-wrap gap-7">
+        {/* per page select */}
         <div className="flex items-center">
           Show
           <Select
@@ -119,7 +125,7 @@ export const PaginationRow = ({
           albums
         </div>
 
-        {/* Layout/View control */}
+        {/* layout / view control */}
         <ToggleGroup
           type="single"
           spacing={2}
@@ -139,6 +145,29 @@ export const PaginationRow = ({
             <AlignJustify />
           </ToggleGroupItem>
         </ToggleGroup>
+
+        {/* sort select */}
+        <div className="flex items-center">
+          Sort
+          <Select
+            value={sort ? JSON.stringify(sort) : ''}
+            onValueChange={(value) => {
+              setSort(JSON.parse(value))
+              setPage(1) // reset page to 1 when sort changes
+            }}
+          >
+            <SelectTrigger className="ms-3 w-40">
+              <SelectValue placeholder="sort" />
+            </SelectTrigger>
+            <SelectContent position="popper" align="end">
+              {sortOptions.map((option) => (
+                <SelectItem value={JSON.stringify(option)} key={option.value}>
+                  {option.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
       </div>
     </div>
   )

@@ -81,7 +81,12 @@ export const AlbumTextList = ({ releases, onAlbumClick, activeAlbum }: AlbumText
 
             {/* format */}
             <TableCell className="truncate">
-              <span className="opacity-60">{formats.map((format) => format.name).join(', ')}</span>
+              <span className="opacity-60">
+                {formats
+                  .filter((format) => format.name !== 'All Media')
+                  .map(({ qty, name }) => (parseInt(qty) > 1 ? `${qty} x ${name}` : name))
+                  .join(', ')}
+              </span>
             </TableCell>
 
             {/* details button */}
