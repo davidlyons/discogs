@@ -78,24 +78,22 @@ export const AlbumTextList = ({ releases, onAlbumClick, activeAlbum }: AlbumText
             </TableCell>
 
             {/* genres */}
-            <TableCell className="truncate">
-              <span className="opacity-60">{(styles.length ? styles : genres).join(', ')}</span>
+            <TableCell className="text-foreground/60 truncate">
+              {(styles.length ? styles : genres).join(', ')}
             </TableCell>
 
             {/* format */}
-            <TableCell className="truncate">
-              <span className="opacity-60">
-                {formats
-                  .filter((format) => format.name !== 'All Media')
-                  .map(({ qty, name }) => (parseInt(qty) > 1 ? `${qty} x ${name}` : name))
-                  .join(', ')}
-              </span>
+            <TableCell className="text-foreground/60 truncate">
+              {formats
+                .filter((format) => format.name !== 'All Media')
+                .map(({ qty, name }) => (parseInt(qty) > 1 ? `${qty} x ${name}` : name))
+                .join(', ')}
             </TableCell>
 
             {/* details button */}
             <TableCell className="text-center">
               <button
-                className="cursor-pointer opacity-30 transition-opacity group-hover:opacity-50
+                className="cursor-pointer opacity-40 transition-opacity group-hover:opacity-60
                   hover:opacity-100"
                 onClick={() => onAlbumClick(id)}
               >
@@ -110,7 +108,7 @@ export const AlbumTextList = ({ releases, onAlbumClick, activeAlbum }: AlbumText
                 href={getListenUrl(artists, title)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="opacity-30 transition-opacity group-hover:opacity-50 hover:opacity-100"
+                className="opacity-40 transition-opacity group-hover:opacity-60 hover:opacity-100"
               >
                 <CirclePlay size={20} />
                 <span className="sr-only">YouTube</span>
