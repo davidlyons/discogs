@@ -100,7 +100,7 @@ export const AlbumDetails = ({
                     .join(', ')}{' '}
                   {/* text = vinyl color */}
                   {release.formats
-                    // .filter((format) => format.name !== 'All Media')
+                    .filter((format) => format.name !== 'All Media')
                     .map(
                       ({ text }) =>
                         text && (
