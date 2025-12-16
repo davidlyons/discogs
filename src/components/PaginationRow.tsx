@@ -133,7 +133,6 @@ export const PaginationRow = ({
           value={view}
           onValueChange={(value: View) => {
             if (value) setView(value)
-            setPerPage(value === 'covers' ? 50 : 25)
           }}
         >
           <ToggleGroupItem value="covers-text" title="Covers and text">
