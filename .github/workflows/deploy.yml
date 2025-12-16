@@ -46,8 +46,6 @@ jobs:
         run: pnpm install
       - name: Build project
         run: pnpm run build
-        env:
-          DISCOGS_TOKEN: ${{ secrets.DISCOGS_TOKEN }}
       - name: Upload production-ready build files
         uses: actions/upload-pages-artifact@v3
         with:
