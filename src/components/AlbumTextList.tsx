@@ -43,7 +43,11 @@ export const AlbumTextList = ({ releases, onAlbumClick, activeAlbum }: AlbumText
           >
             {/* thumb image */}
             <TableCell className="flex justify-center">
-              <img src={thumb} alt={title} className="inline size-5 scale-150 rounded-xs" />
+              <img
+                src={thumb}
+                alt={title}
+                className="inline size-5 shrink-0 scale-150 rounded-xs"
+              />
             </TableCell>
 
             {/* title */}
