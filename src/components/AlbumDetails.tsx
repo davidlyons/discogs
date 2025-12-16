@@ -153,8 +153,8 @@ export const AlbumDetails = ({
                 {/* tracklist */}
                 <Table className="table-fixed">
                   <TableBody>
-                    {release.tracklist.map(({ position, title, duration, type_ }) => (
-                      <TableRow key={`${release.title}-${position}`}>
+                    {release.tracklist.map(({ position, title, duration, type_ }, index) => (
+                      <TableRow key={`${release.title}-${position}-${index}`}>
                         <TableCell>{position}</TableCell>
                         <TableCell className="w-2/3 truncate overflow-hidden">
                           {type_ === 'heading' ? <h3 className="font-bold">{title}</h3> : title}
