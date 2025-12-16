@@ -14,7 +14,7 @@ export const AlbumCoversGrid = ({ releases, onAlbumClick, activeAlbum }: AlbumCo
     className="grid grid-cols-3 gap-4 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 2xl:grid-cols-10"
   >
     {releases.map(({ basic_information: { id, title, artists, thumb, year } }, index) => (
-      <Tooltip>
+      <Tooltip key={`${title}-${index}`}>
         <TooltipTrigger asChild>
           <button
             onClick={() => onAlbumClick(id)}
@@ -23,7 +23,6 @@ export const AlbumCoversGrid = ({ releases, onAlbumClick, activeAlbum }: AlbumCo
               outline-offset-2 outline-transparent transition-colors`,
               id === activeAlbum && 'outline-ring'
             )}
-            key={`${title}-${index}`}
           >
             {thumb ? (
               <img src={thumb} alt={title} className="size-full object-cover" />

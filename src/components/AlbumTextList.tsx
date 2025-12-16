@@ -33,7 +33,10 @@ export const AlbumTextList = ({ releases, onAlbumClick, activeAlbum }: AlbumText
     </TableHeader>
     <TableBody>
       {releases.map(
-        ({ basic_information: { id, thumb, title, artists, year, genres, formats } }, index) => (
+        (
+          { basic_information: { id, thumb, title, artists, year, genres, styles, formats } },
+          index
+        ) => (
           <TableRow
             className={cn('group', id === activeAlbum && 'bg-muted/70')}
             key={`${title}-${index}`}
@@ -76,7 +79,7 @@ export const AlbumTextList = ({ releases, onAlbumClick, activeAlbum }: AlbumText
 
             {/* genres */}
             <TableCell className="truncate">
-              <span className="opacity-60">{genres.join(', ')}</span>
+              <span className="opacity-60">{(styles.length ? styles : genres).join(', ')}</span>
             </TableCell>
 
             {/* format */}

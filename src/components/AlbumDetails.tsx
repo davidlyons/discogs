@@ -12,6 +12,7 @@ import {
 
 import { Spinner } from '@/components/ui/spinner'
 import { Button } from '@/components/ui/button'
+import { Badge } from '@/components/ui/badge'
 import type { Release } from '@/lib/types-release'
 import { getListenUrl } from '@/lib/getListenUrl'
 
@@ -91,9 +92,26 @@ export const AlbumDetails = ({
                     {release.title}
                   </a>
                 </SheetTitle>
-                <SheetDescription>{release.year}</SheetDescription>
+                <SheetDescription className="flex flex-wrap gap-x-2.5 gap-y-1.5">
+                  {release.year} •{' '}
+                  {release.formats
+                    .filter((format) => format.name !== 'All Media')
+                    .map(({ qty, name }) => (parseInt(qty) > 1 ? `${qty} x ${name}` : name))
+                    .join(', ')}{' '}
+                  {/* text = vinyl color */}
+                  {release.formats
+                    // .filter((format) => format.name !== 'All Media')
+                    .map(
+                      ({ text }) =>
+                        text && (
+                          <Badge variant="secondary" className="bg-chart-1">
+                            {text}
+                          </Badge>
+                        )
+                    )}
+                </SheetDescription>
                 <SheetDescription>
-                  {`${release.genres.join(', ')} / ${release.styles.join(', ')}`}
+                  {`${release.genres.join(', ')}${release.styles.length ? ' / ' : ''}${release.styles.join(', ')}`}
                 </SheetDescription>
               </SheetHeader>
 
