@@ -24,7 +24,7 @@ export const AlbumTextList = ({ releases, onAlbumClick, activeAlbum }: AlbumText
         <TableHead className="w-14"></TableHead>
         <TableHead className="w-1/3">Title</TableHead>
         <TableHead>Artist</TableHead>
-        <TableHead>Year</TableHead>
+        <TableHead className="w-20">Year</TableHead>
         <TableHead>Genres</TableHead>
         <TableHead>Format</TableHead>
         <TableHead className="w-16 text-center">Details</TableHead>
