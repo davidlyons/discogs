@@ -18,8 +18,8 @@ export const AlbumCoversTextGrid = ({
       <button
         className={cn(
           `hover:bg-foreground/10 group focus-visible:bg-foreground/10 cursor-pointer
-          overflow-hidden rounded-sm p-3 text-start outline-1 outline-transparent transition-colors`,
-          id === activeAlbum && 'outline-ring'
+          overflow-hidden rounded-xl p-3 text-start outline-1 outline-transparent transition-colors`,
+          id === activeAlbum && 'bg-foreground/15!'
         )}
         key={`${title}-${index}`}
         onClick={() => onAlbumClick(id)}
@@ -34,9 +34,7 @@ export const AlbumCoversTextGrid = ({
           )}
         </div>
         <div className="grow">
-          <h2 className="max-w-40 truncate md:max-w-24 xl:max-w-36">
-            <span className="underline-offset-4 group-hover:underline">{title}</span>
-          </h2>
+          <h2 className="max-w-40 truncate md:max-w-24 xl:max-w-36">{title}</h2>
           <p className="mb-2 max-w-40 truncate opacity-70 md:max-w-24 xl:max-w-36">
             {artists.map((artist) => artist.name).join(', ')}
           </p>

@@ -21,7 +21,7 @@ export const AlbumCoversGrid = ({ releases, onAlbumClick, activeAlbum }: AlbumCo
             className={cn(
               `hover:outline-ring aspect-square cursor-pointer overflow-hidden rounded-sm outline-2
               outline-offset-2 outline-transparent transition-colors`,
-              id === activeAlbum && 'outline-ring'
+              id === activeAlbum && 'outline-foreground!'
             )}
           >
             {thumb ? (
