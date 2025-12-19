@@ -22,7 +22,7 @@ import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
 import { LayoutGrid, LayoutList, AlignJustify } from 'lucide-react'
 import type { View } from '@/components/VinylBrowser'
 
-import { type SortingOption, sortOptions } from '@/lib/getUserCollection'
+import { type SortingOption, sortOptions } from '@/lib/sort'
 
 type PaginationRowProps = {
   pagination: PaginationType

@@ -4,11 +4,14 @@ import type { Release } from '@/lib/types-release'
 
 // get user's vinyl collection
 export const getRelease = async (id: number | undefined) => {
-  const response = await fetch(`https://api.discogs.com/releases/${id}`, {
-    headers: {
-      Authorization: `Discogs token=${import.meta.env.DISCOGS_TOKEN}`,
-    },
-  })
+  const response = await fetch(
+    `https://api.discogs.com/releases/${id}`
+    // {
+    //   headers: {
+    //     Authorization: `Discogs token=${import.meta.env.DISCOGS_TOKEN}`,
+    //   },
+    // }
+  )
 
   if (!response.ok) {
     throw new Error(`Error: ${response.status}`)

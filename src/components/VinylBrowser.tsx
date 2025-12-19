@@ -2,13 +2,13 @@ import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { getUserCollection } from '@/lib/getUserCollection'
 import { getRelease } from '@/lib/getRelease'
+import { sortOptions } from '@/lib/sort'
 import { Spinner } from '@/components/ui/spinner'
 import { PaginationRow } from '@/components/PaginationRow'
 import { AlbumCoversTextGrid } from '@/components/AlbumCoversTextGrid'
 import { AlbumCoversGrid } from '@/components/AlbumCoversGrid'
 import { AlbumTextList } from '@/components/AlbumTextList'
 import { AlbumDetails } from '@/components/AlbumDetails'
-import { sortOptions } from '@/lib/getUserCollection'
 
 type VinylBrowserProps = {
   user: string
