@@ -2,7 +2,6 @@ import type { Release } from '@/lib/types-release'
 
 // https://www.discogs.com/developers#page:database,header:database-release
 
-// get user's vinyl collection
 export const getRelease = async (id: number | undefined) => {
   const response = await fetch(
     `https://api.discogs.com/releases/${id}`
