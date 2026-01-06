@@ -24,6 +24,17 @@ import type { View } from '@/components/VinylBrowser'
 
 import { type SortingOption, sortOptions } from '@/lib/sort'
 
+import { Button } from '@/components/ui/button'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
+
 type PaginationRowProps = {
   pagination: PaginationType
   perPage: number
@@ -126,7 +137,7 @@ export const PaginationRow = ({
         </div>
 
         {/* layout / view control */}
-        <ToggleGroup
+        {/* <ToggleGroup
           type="single"
           spacing={2}
           variant="outline"
@@ -144,7 +155,37 @@ export const PaginationRow = ({
           <ToggleGroupItem value="text" title="Text only">
             <AlignJustify />
           </ToggleGroupItem>
-        </ToggleGroup>
+        </ToggleGroup> */}
+
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline">
+              {view === 'covers-text' && <LayoutList />}
+              {view === 'covers' && <LayoutGrid />}
+              {view === 'text' && <AlignJustify />}
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-56" align="start">
+            <DropdownMenuLabel>Layout</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuRadioGroup
+              value={view}
+              onValueChange={(value) => {
+                if (value) setView(value as View)
+              }}
+            >
+              <DropdownMenuRadioItem value="covers-text">
+                <LayoutList /> Covers and text
+              </DropdownMenuRadioItem>
+              <DropdownMenuRadioItem value="covers">
+                <LayoutGrid /> Covers only
+              </DropdownMenuRadioItem>
+              <DropdownMenuRadioItem value="text">
+                <AlignJustify /> Text only
+              </DropdownMenuRadioItem>
+            </DropdownMenuRadioGroup>
+          </DropdownMenuContent>
+        </DropdownMenu>
 
         {/* sort select */}
         <div className="flex items-center">
