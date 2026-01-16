@@ -18,21 +18,11 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 
-import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
-import { LayoutGrid, LayoutList, AlignJustify } from 'lucide-react'
-import type { View } from '@/components/VinylBrowser'
-
-import { type SortingOption, sortOptions } from '@/lib/sort'
-
 type PaginationRowProps = {
   pagination: PaginationType
   perPage: number
   setPage: React.Dispatch<React.SetStateAction<number>>
   setPerPage: React.Dispatch<React.SetStateAction<number>>
-  view: View
-  setView: React.Dispatch<React.SetStateAction<View>>
-  sort: SortingOption
-  setSort: React.Dispatch<React.SetStateAction<SortingOption>>
 }
 
 type PaginationItemsType = (number | 'start-ellipsis' | 'end-ellipsis')[]
@@ -72,18 +62,12 @@ const getPaginationItems = (current: number, total: number, neighbors = 1): Pagi
   return items
 }
 
-export const PaginationRow = ({
-  pagination,
-  setPage,
-  perPage,
-  setPerPage,
-  view,
-  setView,
-  sort,
-  setSort,
-}: PaginationRowProps) => {
+export const PaginationRow = ({ pagination, setPage, perPage, setPerPage }: PaginationRowProps) => {
   return (
-    <div className="mb-4 flex flex-wrap items-center justify-between gap-4 text-sm">
+    <div
+      className="relative mb-4 flex flex-col flex-wrap items-center justify-between gap-4 text-sm
+        sm:flex-row"
+    >
       <div>
         <Pagination>
           <PaginationContent>
@@ -136,7 +120,7 @@ export const PaginationRow = ({
         </Pagination>
       </div>
 
-      <div>
+      <div className="absolute top-1/2 left-1/2 hidden -translate-1/2 lg:block">
         Showing{' '}
         <span className="mx-1 font-bold">
           {pagination.per_page * (pagination.page - 1) + 1} –{' '}
@@ -171,50 +155,6 @@ export const PaginationRow = ({
             </SelectContent>
           </Select>
           albums
-        </div>
-
-        {/* layout / view control */}
-        <ToggleGroup
-          type="single"
-          spacing={2}
-          variant="outline"
-          value={view}
-          onValueChange={(value: View) => {
-            if (value) setView(value)
-          }}
-        >
-          <ToggleGroupItem value="covers-text" title="Covers and text">
-            <LayoutList />
-          </ToggleGroupItem>
-          <ToggleGroupItem value="covers" title="Covers only">
-            <LayoutGrid />
-          </ToggleGroupItem>
-          <ToggleGroupItem value="text" title="Text only">
-            <AlignJustify />
-          </ToggleGroupItem>
-        </ToggleGroup>
-
-        {/* sort select */}
-        <div className="flex items-center">
-          Sort
-          <Select
-            value={sort ? JSON.stringify(sort) : ''}
-            onValueChange={(value) => {
-              setSort(JSON.parse(value))
-              setPage(1) // reset page to 1 when sort changes
-            }}
-          >
-            <SelectTrigger className="ms-3 w-40">
-              <SelectValue placeholder="sort" />
-            </SelectTrigger>
-            <SelectContent position="popper" align="end">
-              {sortOptions.map((option) => (
-                <SelectItem value={JSON.stringify(option)} key={option.value}>
-                  {option.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
         </div>
       </div>
     </div>

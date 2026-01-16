@@ -2,26 +2,26 @@ import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { getUserCollection } from '@/lib/getUserCollection'
 import { getRelease } from '@/lib/getRelease'
-import { sortOptions } from '@/lib/sort'
 import { Spinner } from '@/components/ui/spinner'
 import { PaginationRow } from '@/components/PaginationRow'
 import { AlbumCoversTextGrid } from '@/components/AlbumCoversTextGrid'
 import { AlbumCoversGrid } from '@/components/AlbumCoversGrid'
 import { AlbumTextList } from '@/components/AlbumTextList'
 import { AlbumDetails } from '@/components/AlbumDetails'
+import type { SortingOption } from '@/lib/sort'
 
 type VinylBrowserProps = {
   user: string
   page: number
   setPage: React.Dispatch<React.SetStateAction<number>>
+  view: View
+  sort: SortingOption
 }
 
 export type View = 'covers' | 'covers-text' | 'text'
 
-export function VinylBrowser({ user, page, setPage }: VinylBrowserProps) {
+export function VinylBrowser({ user, page, setPage, view, sort }: VinylBrowserProps) {
   const [perPage, setPerPage] = useState(25)
-  const [sort, setSort] = useState(sortOptions[0])
-  const [view, setView] = useState<View>('covers-text')
 
   const [isSheetOpen, setIsSheetOpen] = useState(false)
   const [focusedAlbum, setFocusedAlbum] = useState<number | undefined>()
@@ -68,10 +68,6 @@ export function VinylBrowser({ user, page, setPage }: VinylBrowserProps) {
           setPage={setPage}
           perPage={perPage}
           setPerPage={setPerPage}
-          view={view}
-          setView={setView}
-          sort={sort}
-          setSort={setSort}
         />
 
         {view === 'covers-text' ? (
