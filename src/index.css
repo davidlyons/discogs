@@ -123,6 +123,18 @@
   * {
     @apply border-border outline-ring/50;
   }
+
+  html {
+    overflow-y: scroll;
+  }
+
+  /* prevent shadcn selct from removing the scrollbar */
+  html body[data-scroll-locked] {
+    margin-right: 0 !important; /* For LTR layout */
+    margin-left: 0 !important; /* For RTL layout */
+    overflow-y: visible !important;
+  }
+
   body {
     @apply bg-background text-foreground min-h-screen;
   }

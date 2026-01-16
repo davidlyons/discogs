@@ -43,9 +43,10 @@ function PaginationLink({ className, isActive, size = 'icon', ...props }: Pagina
       data-active={isActive}
       className={cn(
         buttonVariants({
-          variant: isActive ? 'outline' : 'ghost',
+          variant: isActive ? 'default' : 'ghost',
           size,
         }),
+        'transition-none', // prevent active page "jumping" effect when changing page
         className
       )}
       {...props}

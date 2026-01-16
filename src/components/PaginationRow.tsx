@@ -3,7 +3,7 @@ import type { Pagination as PaginationType } from '@/lib/types-collection'
 import {
   Pagination,
   PaginationContent,
-  // PaginationEllipsis,
+  PaginationEllipsis,
   PaginationItem,
   PaginationLink,
   PaginationNext,
@@ -35,6 +35,31 @@ type PaginationRowProps = {
   setSort: React.Dispatch<React.SetStateAction<SortingOption>>
 }
 
+type PaginationItemsType = (number | 'start-ellipsis' | 'end-ellipsis')[]
+
+const getPaginationItems = (current: number, total: number) => {
+  if (total <= 7) return Array.from({ length: total }, (_, i) => i + 1)
+
+  const items: PaginationItemsType = []
+
+  if (current <= 4) {
+    // beginning: 1..5, ellipsis, last
+    items.push(1, 2, 3, 4, 5, 'end-ellipsis', total)
+    return items
+  }
+
+  if (current >= total - 3) {
+    // ending: first, ellipsis, last-4..last
+    items.push(1, 'start-ellipsis')
+    for (let p = total - 4; p <= total; p++) items.push(p)
+    return items
+  }
+
+  // middle: first, ellipsis, current-1, current, current+1, ellipsis, last
+  items.push(1, 'start-ellipsis', current - 1, current, current + 1, 'end-ellipsis', total)
+  return items
+}
+
 export const PaginationRow = ({
   pagination,
   setPage,
@@ -59,22 +84,33 @@ export const PaginationRow = ({
                 }}
               />
             </PaginationItem>
-            {Array.from({ length: pagination.pages }, (_, i) => (
-              <PaginationItem key={i + 1}>
-                <PaginationLink
-                  isActive={i + 1 === pagination.page}
-                  onClick={(e) => {
-                    e.preventDefault()
-                    setPage(i + 1)
-                  }}
-                >
-                  {i + 1}
-                </PaginationLink>
-              </PaginationItem>
-            ))}
-            {/* <PaginationItem>
-              <PaginationEllipsis />
-            </PaginationItem> */}
+
+            {getPaginationItems(pagination.page, pagination.pages).map((item, index) => {
+              if (item === 'start-ellipsis' || item === 'end-ellipsis') {
+                return (
+                  <PaginationItem key={`ellipsis-${index}`}>
+                    <PaginationEllipsis />
+                  </PaginationItem>
+                )
+              }
+
+              const pageNum = item
+
+              return (
+                <PaginationItem key={pageNum}>
+                  <PaginationLink
+                    isActive={pageNum === pagination.page}
+                    onClick={(e) => {
+                      e.preventDefault()
+                      setPage(pageNum)
+                    }}
+                  >
+                    {pageNum}
+                  </PaginationLink>
+                </PaginationItem>
+              )
+            })}
+
             <PaginationItem>
               <PaginationNext
                 disabled={pagination.page === pagination.pages}
