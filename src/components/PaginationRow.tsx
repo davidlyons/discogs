@@ -37,26 +37,38 @@ type PaginationRowProps = {
 
 type PaginationItemsType = (number | 'start-ellipsis' | 'end-ellipsis')[]
 
-const getPaginationItems = (current: number, total: number) => {
-  if (total <= 7) return Array.from({ length: total }, (_, i) => i + 1)
+const getPaginationItems = (current: number, total: number, neighbors = 1): PaginationItemsType => {
+  // total visible items including neighbors, first/last, current and 2 ellipses
+  const visible = 2 * neighbors + 5
+
+  if (total <= visible) return Array.from({ length: total }, (_, i) => i + 1)
 
   const items: PaginationItemsType = []
 
-  if (current <= 4) {
-    // beginning: 1..5, ellipsis, last
-    items.push(1, 2, 3, 4, 5, 'end-ellipsis', total)
+  // compute start/end blocks so that the total returned length is V
+  const startBlockRight = visible - 2 // pages shown from 1..startBlockRight when near start
+  const endBlockLeft = total - (visible - 3) // pages shown from endBlockLeft..total when near end
+
+  // start block when current is near start
+  if (current <= startBlockRight - neighbors) {
+    for (let p = 1; p <= startBlockRight; p++) items.push(p)
+    items.push('end-ellipsis', total)
     return items
   }
 
-  if (current >= total - 3) {
-    // ending: first, ellipsis, last-4..last
+  // end block when current is near the end
+  if (current >= endBlockLeft + neighbors) {
     items.push(1, 'start-ellipsis')
-    for (let p = total - 4; p <= total; p++) items.push(p)
+    for (let p = endBlockLeft; p <= total; p++) items.push(p)
     return items
   }
 
-  // middle: first, ellipsis, current-1, current, current+1, ellipsis, last
-  items.push(1, 'start-ellipsis', current - 1, current, current + 1, 'end-ellipsis', total)
+  // middle: center current with 'neighbors' on each side, total length will be 'visible'
+  items.push(1, 'start-ellipsis')
+  const left = Math.max(2, current - neighbors)
+  const right = Math.min(total - 1, current + neighbors)
+  for (let p = left; p <= right; p++) items.push(p)
+  items.push('end-ellipsis', total)
   return items
 }
 
