@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { getUserCollection } from '@/lib/getUserCollection'
 import { getRelease } from '@/lib/getRelease'
@@ -9,9 +9,9 @@ import { AlbumCoversGrid } from '@/components/AlbumCoversGrid'
 import { AlbumTextList } from '@/components/AlbumTextList'
 import { AlbumDetails } from '@/components/AlbumDetails'
 import type { SortingOption } from '@/lib/sort'
+import { UserContext } from '@/contexts'
 
 type VinylBrowserProps = {
-  user: string
   page: number
   setPage: React.Dispatch<React.SetStateAction<number>>
   view: View
@@ -20,7 +20,9 @@ type VinylBrowserProps = {
 
 export type View = 'covers' | 'covers-text' | 'text'
 
-export function VinylBrowser({ user, page, setPage, view, sort }: VinylBrowserProps) {
+export function VinylBrowser({ page, setPage, view, sort }: VinylBrowserProps) {
+  const [user] = useContext(UserContext)
+
   const [perPage, setPerPage] = useState(25)
 
   const [isSheetOpen, setIsSheetOpen] = useState(false)

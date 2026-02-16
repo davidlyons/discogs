@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { ExternalLink, LayoutGrid, LayoutList, AlignJustify } from 'lucide-react'
@@ -13,9 +13,11 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { sortOptions, type SortingOption } from '@/lib/sort'
+import { UserContext } from '@/contexts'
 
 export const App = () => {
-  const [user, setUser] = useState('davidlyons')
+  const [user, setUser] = useContext(UserContext)
+
   const [page, setPage] = useState(1)
   const [view, setView] = useState<View>('covers-text')
   const [sort, setSort] = useState<SortingOption>(sortOptions[0])
@@ -95,7 +97,7 @@ export const App = () => {
           </div>
         </div>
 
-        <VinylBrowser user={user} page={page} setPage={setPage} view={view} sort={sort} />
+        <VinylBrowser page={page} setPage={setPage} view={view} sort={sort} />
       </div>
 
       {/* github repo link */}
