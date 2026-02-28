@@ -4,7 +4,17 @@ import { Button } from '@/components/ui/button'
 import { ExternalLink, LayoutGrid, LayoutList, AlignJustify } from 'lucide-react'
 import { VinylBrowser, type View } from '@/components/VinylBrowser'
 import { GitHubLogoIcon } from '@radix-ui/react-icons'
-import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
+// import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
+
 import {
   Select,
   SelectContent,
@@ -52,7 +62,7 @@ export const App = () => {
 
           <div className="flex flex-wrap items-center justify-center gap-6">
             {/* layout / view control */}
-            <ToggleGroup
+            {/* <ToggleGroup
               type="single"
               spacing={2}
               variant="outline"
@@ -70,7 +80,36 @@ export const App = () => {
               <ToggleGroupItem value="text" title="Text only">
                 <AlignJustify />
               </ToggleGroupItem>
-            </ToggleGroup>
+            </ToggleGroup> */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline">
+                  {view === 'covers-text' && <LayoutList />}
+                  {view === 'covers' && <LayoutGrid />}
+                  {view === 'text' && <AlignJustify />}
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-56" align="start">
+                <DropdownMenuLabel>Layout</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuRadioGroup
+                  value={view}
+                  onValueChange={(value) => {
+                    if (value) setView(value as View)
+                  }}
+                >
+                  <DropdownMenuRadioItem value="covers-text">
+                    <LayoutList /> Covers and text
+                  </DropdownMenuRadioItem>
+                  <DropdownMenuRadioItem value="covers">
+                    <LayoutGrid /> Covers only
+                  </DropdownMenuRadioItem>
+                  <DropdownMenuRadioItem value="text">
+                    <AlignJustify /> Text only
+                  </DropdownMenuRadioItem>
+                </DropdownMenuRadioGroup>
+              </DropdownMenuContent>
+            </DropdownMenu>
 
             {/* sort select */}
             <div className="flex items-center">
