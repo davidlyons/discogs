@@ -1,17 +1,15 @@
 import { useContext, useState } from 'react'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
-import { ExternalLink, LayoutGrid, LayoutList, AlignJustify } from 'lucide-react'
+import { ExternalLink, LayoutGrid, LayoutList, AlignJustify, ChevronDown } from 'lucide-react'
 import { VinylBrowser, type View } from '@/components/VinylBrowser'
 import { GitHubLogoIcon } from '@radix-ui/react-icons'
-// import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
+
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 
@@ -61,37 +59,17 @@ export const App = () => {
           </div>
 
           <div className="flex flex-wrap items-center justify-center gap-6">
-            {/* layout / view control */}
-            {/* <ToggleGroup
-              type="single"
-              spacing={2}
-              variant="outline"
-              value={view}
-              onValueChange={(value: View) => {
-                if (value) setView(value)
-              }}
-            >
-              <ToggleGroupItem value="covers-text" title="Covers and text">
-                <LayoutList />
-              </ToggleGroupItem>
-              <ToggleGroupItem value="covers" title="Covers only">
-                <LayoutGrid />
-              </ToggleGroupItem>
-              <ToggleGroupItem value="text" title="Text only">
-                <AlignJustify />
-              </ToggleGroupItem>
-            </ToggleGroup> */}
+            {/* layout dropdown */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline">
                   {view === 'covers-text' && <LayoutList />}
                   {view === 'covers' && <LayoutGrid />}
                   {view === 'text' && <AlignJustify />}
+                  <ChevronDown className="text-muted-foreground opacity-50" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-56" align="start">
-                <DropdownMenuLabel>Layout</DropdownMenuLabel>
-                <DropdownMenuSeparator />
                 <DropdownMenuRadioGroup
                   value={view}
                   onValueChange={(value) => {
