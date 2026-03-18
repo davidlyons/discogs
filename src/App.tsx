@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useContext, useState, useEffect } from 'react'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { ExternalLink, LayoutGrid, LayoutList, AlignJustify, ChevronDown } from 'lucide-react'
@@ -23,12 +23,27 @@ import {
 import { sortOptions, type SortingOption } from '@/lib/sort'
 import { UserContext } from '@/contexts'
 
+import { useDebounce } from '@/lib/useDebounce'
+
 export const App = () => {
   const [user, setUser] = useContext(UserContext)
+  const [userInput, setUserInput] = useState(user)
+  const debouncedUser = useDebounce(userInput, 1000)
 
   const [page, setPage] = useState(1)
   const [view, setView] = useState<View>('covers-text')
   const [sort, setSort] = useState<SortingOption>(sortOptions[0])
+
+  useEffect(() => {
+    const onDebouncedUserChange = () => {
+      setUser(userInput)
+      setPage(1)
+    }
+
+    onDebouncedUserChange()
+
+    // eslint-disable-next-line
+  }, [debouncedUser])
 
   return (
     <div className="overflow-hidden pt-14 pb-8 min-[1680px]:pb-14">
@@ -41,10 +56,9 @@ export const App = () => {
               className="w-auto"
               name="user"
               placeholder="Discogs username"
-              value={user}
+              value={userInput}
               onChange={(e) => {
-                setUser(e.target.value)
-                setPage(1) // reset page to 1 when user changes
+                setUserInput(e.target.value)
               }}
             />
             <Button variant="outline" size="icon" aria-label="Open Discogs profile" asChild>
