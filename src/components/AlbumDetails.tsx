@@ -15,6 +15,7 @@ import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import type { Release } from '@/lib/types-release'
 import { getListenUrl } from '@/lib/getListenUrl'
+import { getColorClasses } from '@/lib/getColor'
 
 import {
   Carousel,
@@ -108,7 +109,7 @@ export const AlbumDetails = ({
                           text && (
                             <Badge
                               variant="secondary"
-                              className="bg-chart-1"
+                              className={getColorClasses(text)}
                               key={`${release.id}-${text}`}
                             >
                               {text}
