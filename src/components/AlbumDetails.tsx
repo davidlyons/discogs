@@ -92,23 +92,30 @@ export const AlbumDetails = ({
                     {release.title}
                   </a>
                 </SheetTitle>
-                <SheetDescription className="flex flex-wrap gap-x-2.5 gap-y-1.5">
-                  {release.year} •{' '}
+                <SheetDescription className="flex flex-wrap gap-x-2.5 gap-y-1.5 leading-6">
+                  {release.year}
+                  {' • '}
                   {release.formats
                     .filter((format) => format.name !== 'All Media')
                     .map(({ qty, name }) => (parseInt(qty) > 1 ? `${qty} x ${name}` : name))
                     .join(', ')}{' '}
                   {/* text = vinyl color */}
-                  {release.formats
-                    .filter((format) => format.name !== 'All Media')
-                    .map(
-                      ({ text }) =>
-                        text && (
-                          <Badge variant="secondary" className="bg-chart-1">
-                            {text}
-                          </Badge>
-                        )
-                    )}
+                  <span className="flex flex-wrap gap-1.5">
+                    {release.formats
+                      .filter((format) => format.name !== 'All Media')
+                      .map(
+                        ({ text }) =>
+                          text && (
+                            <Badge
+                              variant="secondary"
+                              className="bg-chart-1"
+                              key={`${release.id}-${text}`}
+                            >
+                              {text}
+                            </Badge>
+                          )
+                      )}
+                  </span>
                 </SheetDescription>
                 <SheetDescription>
                   {`${release.genres.join(', ')}${release.styles.length ? ' / ' : ''}${release.styles.join(', ')}`}
