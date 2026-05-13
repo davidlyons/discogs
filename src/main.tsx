@@ -2,7 +2,7 @@ import { StrictMode, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import { App } from '@/App.tsx'
 import { UserContext } from '@/contexts'
-import '@fontsource-variable/inter'
+import '@fontsource-variable/inter/wght.css'
 import '@/index.css'
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
