@@ -48,28 +48,32 @@ export const App = () => {
   return (
     <div className="overflow-hidden pt-14 pb-8 min-[1680px]:pb-14">
       <div className="container">
-        <div className="mb-5 flex flex-wrap justify-center gap-4 text-sm md:justify-between">
+        <div
+          className="mb-5 flex flex-col justify-center gap-4 text-sm md:flex-row md:justify-between"
+        >
           {/* username input */}
-          <div className="flex items-center gap-2">
+          <div className="flex flex-col items-center gap-2 md:flex-row">
             <span className="font-bold">Discogs user</span>
-            <Input
-              className="w-auto"
-              name="user"
-              placeholder="Discogs username"
-              value={userInput}
-              onChange={(e) => {
-                setUserInput(e.target.value)
-              }}
-            />
-            <Button variant="outline" size="icon" aria-label="Open Discogs profile" asChild>
-              <a
-                href={`https://www.discogs.com/user/${user}`}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <ExternalLink />
-              </a>
-            </Button>
+            <div className="flex items-center gap-2">
+              <Input
+                className="w-auto"
+                name="user"
+                placeholder="Discogs username"
+                value={userInput}
+                onChange={(e) => {
+                  setUserInput(e.target.value)
+                }}
+              />
+              <Button variant="outline" size="icon" aria-label="Open Discogs profile" asChild>
+                <a
+                  href={`https://www.discogs.com/user/${user}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <ExternalLink />
+                </a>
+              </Button>
+            </div>
           </div>
 
           <div className="flex flex-wrap items-center justify-center gap-6">
